@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, CalendarDays, MapPin, User, Bell, Plus, Menu, X } from "lucide-react";
+import { Home, CalendarDays, MapPin, CalendarCheck, Bell, Plus, Menu, X } from "lucide-react";
 import type { ScreenName } from "../types";
 import { initialsOf } from "../useAuth";
 import { ParrotLogo } from "./ParrotLogo";
@@ -14,7 +14,7 @@ const LINKS: NavLink[] = [
   { key: "home", label: "Home", Icon: Home },
   { key: "calendar", label: "Schedule", Icon: CalendarDays },
   { key: "map", label: "Explore", Icon: MapPin },
-  { key: "profile", label: "Profile", Icon: User },
+  { key: "hosted", label: "Hosted Events", Icon: CalendarCheck },
 ];
 
 export function TopNav({
@@ -34,14 +34,8 @@ export function TopNav({
   };
 
   // Which top-level tab is highlighted (sub-screens map back to a parent).
-  const highlighted: ScreenName =
-    active === "event-detail" || active === "hosted"
-      ? "home"
-      : active === "settings"
-        ? "profile"
-        : active === "qr-scanner" || active === "attendance"
-          ? "profile"
-          : active;
+  // Profile / settings / organizer tools aren't nav links, so they highlight nothing.
+  const highlighted: ScreenName = active === "event-detail" ? "home" : active;
 
   return (
     <header className="topnav">
