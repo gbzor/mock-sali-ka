@@ -887,6 +887,49 @@
   transform: translateX(20px);
 }
 
+/* Date picker */
+.datepicker {
+  position: relative;
+}
+.datepicker__trigger {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.datepicker__trigger span {
+  flex: 1;
+  font-weight: 600;
+}
+.datepicker__caret {
+  flex: none;
+}
+.datepicker__pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 300px;
+  max-width: 92vw;
+  padding: 16px;
+  box-shadow: var(--shadow-float);
+  animation: page-in 0.16s ease both;
+}
+.datepicker__pop .cal-month {
+  margin-bottom: 12px;
+}
+.datepicker__pop .cal-month__label {
+  font-size: 15px;
+}
+.datepicker__pop .cal-cell {
+  font-size: 13.5px;
+  border-radius: var(--r-sm);
+}
+.cal-cell--today:not(.cal-cell--selected) {
+  color: var(--green-dark);
+  font-weight: 900;
+  box-shadow: inset 0 0 0 1.5px var(--green);
+}
+
 /* ---------------------------------------------------------------------------
    Profile
    --------------------------------------------------------------------------- */

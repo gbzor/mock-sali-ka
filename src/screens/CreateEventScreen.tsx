@@ -1,10 +1,12 @@
 import { useState, type FormEvent } from "react";
-import { Plus, CalendarDays, Clock, MapPin, Check } from "lucide-react";
+import { Plus, Clock, MapPin, Check } from "lucide-react";
 import { CATEGORIES } from "../data/events";
+import { DatePicker } from "../components/DatePicker";
 import type { Category, ScreenName } from "../types";
 
 export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) => void }) {
   const [category, setCategory] = useState<Category>("Market");
+  const [date, setDate] = useState<Date | null>(null);
   const [promote, setPromote] = useState(true);
   const [posted, setPosted] = useState(false);
 
@@ -32,10 +34,7 @@ export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) 
 
         <div className="form-row">
           <Field label="Date">
-            <div className="input input--icon">
-              <CalendarDays size={18} strokeWidth={2} className="muted" />
-              <input placeholder="Aug 23, 2026" required />
-            </div>
+            <DatePicker value={date} onChange={setDate} placeholder="Pick a date" />
           </Field>
           <Field label="Time">
             <div className="input input--icon">
