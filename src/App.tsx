@@ -48,9 +48,7 @@ export default function App() {
     <div className="app">
       <TopNav active={screen} onNavigate={navigate} userName={session.name} />
       <main>
-        {screen === "home" && (
-          <HomeScreen onOpenEvent={openEvent} onViewHosted={() => navigate("hosted")} />
-        )}
+        {screen === "home" && <HomeScreen onOpenEvent={openEvent} />}
         {screen === "hosted" && (
           <HostedEventsScreen onOpenEvent={openEvent} onBack={() => navigate("home")} />
         )}
