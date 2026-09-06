@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Home, CalendarDays, MapPin, User, Bell, Plus, Search, Menu, X } from "lucide-react";
 import type { ScreenName } from "../types";
 import { initialsOf } from "../useAuth";
+import { ParrotLogo } from "./ParrotLogo";
 
 interface NavLink {
   key: ScreenName;
@@ -46,7 +47,9 @@ export function TopNav({
     <header className="topnav">
       <div className="topnav__inner">
         <button className="brand" onClick={() => go("home")} aria-label="Sali Ka home">
-          <span className="brand__mark">S</span>
+          <span className="brand__mark">
+            <ParrotLogo size={22} />
+          </span>
           <span className="brand__name">
             sali ka<span className="brand__q">?</span>
           </span>

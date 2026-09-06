@@ -1440,6 +1440,36 @@ button.setting-row:hover {
 .auth-hero__q {
   color: #cdeede;
 }
+.auth-hero__art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+.auth-hero__art img,
+.auth-hero__art-fallback {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  max-height: 34vh;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.28));
+  animation: parrot-float 6s ease-in-out infinite;
+}
+.auth-hero__art-fallback {
+  color: #f4f8f5;
+}
+@keyframes parrot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-hero__art img,
+  .auth-hero__art-fallback {
+    animation: none;
+  }
+}
 .auth-hero__body {
   position: relative;
   max-width: 420px;

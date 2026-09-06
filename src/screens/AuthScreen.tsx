@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, MapPin, CalendarDays, QrCode } from "lucide-react";
 import type { Session } from "../useAuth";
+import { ParrotLogo } from "../components/ParrotLogo";
 
 type Mode = "login" | "signup";
 
@@ -21,6 +22,7 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
   const [confirm, setConfirm] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+  const [artOk, setArtOk] = useState(true);
 
   const switchMode = (m: Mode) => {
     setMode(m);
@@ -56,10 +58,24 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
       {/* Left — brand panel */}
       <aside className="auth-hero">
         <div className="auth-hero__top">
-          <span className="brand__mark auth-hero__mark">S</span>
+          <span className="brand__mark auth-hero__mark">
+            <ParrotLogo size={22} />
+          </span>
           <span className="auth-hero__name">
             sali ka<span className="auth-hero__q">?</span>
           </span>
+        </div>
+
+        <div className="auth-hero__art">
+          {artOk ? (
+            <img
+              src="/parrot.png"
+              alt="Sali Ka parrot"
+              onError={() => setArtOk(false)}
+            />
+          ) : (
+            <ParrotLogo size={168} className="auth-hero__art-fallback" title="Sali Ka parrot" />
+          )}
         </div>
 
         <div className="auth-hero__body">
