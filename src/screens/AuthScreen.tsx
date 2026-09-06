@@ -59,7 +59,7 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
       <aside className="auth-hero">
         <div className="auth-hero__top">
           <span className="brand__mark auth-hero__mark">
-            <ParrotLogo size={22} />
+            <ParrotLogo size={30} />
           </span>
           <span className="auth-hero__name">
             sali ka<span className="auth-hero__q">?</span>

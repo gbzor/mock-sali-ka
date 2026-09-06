@@ -1539,12 +1539,16 @@ button.setting-row:hover {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 24px;
+  gap: 14px;
+  font-size: 32px;
   font-weight: 900;
   letter-spacing: -0.02em;
 }
 .auth-hero__mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 24px;
   background: rgba(255, 255, 255, 0.18);
   box-shadow: none;
   color: #fff;
