@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { TopNav } from "./components/TopNav";
 import { AuthScreen } from "./screens/AuthScreen";
 import { HomeScreen } from "./screens/HomeScreen";
+import { HostedEventsScreen } from "./screens/HostedEventsScreen";
 import { CalendarScreen } from "./screens/CalendarScreen";
 import { MapScreen } from "./screens/MapScreen";
 import { CreateEventScreen } from "./screens/CreateEventScreen";
@@ -47,7 +48,12 @@ export default function App() {
     <div className="app">
       <TopNav active={screen} onNavigate={navigate} userName={session.name} />
       <main>
-        {screen === "home" && <HomeScreen onOpenEvent={openEvent} userName={session.name} />}
+        {screen === "home" && (
+          <HomeScreen onOpenEvent={openEvent} onViewHosted={() => navigate("hosted")} />
+        )}
+        {screen === "hosted" && (
+          <HostedEventsScreen onOpenEvent={openEvent} onBack={() => navigate("home")} />
+        )}
         {screen === "calendar" && <CalendarScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} />}
         {screen === "map" && <MapScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} />}
         {screen === "create-event" && <CreateEventScreen onNavigate={navigate} />}

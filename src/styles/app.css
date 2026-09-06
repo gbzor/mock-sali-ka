@@ -183,15 +183,18 @@
 /* ---------------------------------------------------------------------------
    Home
    --------------------------------------------------------------------------- */
-.home-hero {
+.home-toolbar {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  align-items: center;
+  gap: 14px;
   flex-wrap: wrap;
 }
-.home-hero__q {
-  color: var(--green);
+.home-toolbar .home-search {
+  flex: 1 1 320px;
+  max-width: 560px;
+}
+.home-hosted-btn {
+  flex: none;
 }
 .home-search {
   display: flex;

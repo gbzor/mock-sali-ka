@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, CalendarDays, MapPin, User, Bell, Plus, Search, Menu, X } from "lucide-react";
+import { Home, CalendarDays, MapPin, User, Bell, Plus, Menu, X } from "lucide-react";
 import type { ScreenName } from "../types";
 import { initialsOf } from "../useAuth";
 import { ParrotLogo } from "./ParrotLogo";
@@ -35,7 +35,7 @@ export function TopNav({
 
   // Which top-level tab is highlighted (sub-screens map back to a parent).
   const highlighted: ScreenName =
-    active === "event-detail"
+    active === "event-detail" || active === "hosted"
       ? "home"
       : active === "settings"
         ? "profile"
@@ -70,11 +70,6 @@ export function TopNav({
         </nav>
 
         <div className="topnav__actions">
-          <button className="topnav__search" onClick={() => go("home")} aria-label="Search events">
-            <Search size={18} strokeWidth={2.2} />
-            <span>Search events</span>
-          </button>
-
           <button className="iconbtn" aria-label="Notifications">
             <Bell size={20} strokeWidth={2} />
             <span className="iconbtn__dot">3</span>

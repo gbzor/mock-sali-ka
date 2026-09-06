@@ -1,22 +1,18 @@
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, CalendarCheck } from "lucide-react";
 import { EventCard } from "../components/EventCard";
-import { StripePlaceholder } from "../components/StripePlaceholder";
-import { CATEGORIES, FEED_EVENTS, USER } from "../data/events";
+import { CATEGORIES, FEED_EVENTS } from "../data/events";
 import type { Category, EventItem } from "../types";
 
 export function HomeScreen({
   onOpenEvent,
-  userName,
+  onViewHosted,
 }: {
   onOpenEvent: (e: EventItem) => void;
-  userName?: string;
+  onViewHosted: () => void;
 }) {
   const [active, setActive] = useState<Category | "All">("All");
   const [query, setQuery] = useState("");
-  const firstName = (userName || USER.firstName).trim().split(/\s+/)[0];
-
-  const hosted = FEED_EVENTS.find((e) => e.hosting);
 
   const feed = FEED_EVENTS.filter((e) => {
     const byCat = active === "All" || e.category === active;
@@ -26,20 +22,9 @@ export function HomeScreen({
     return byCat && byQuery;
   });
 
-  const showHosted =
-    hosted && (active === "All" || active === hosted.category) && query.trim() === "";
-
   return (
     <div className="page">
-      <div className="home-hero">
-        <div>
-          <h1 className="page-title">
-            sali ka, {firstName}
-            <span className="home-hero__q">?</span>
-          </h1>
-          <p className="page-sub">Discover events happening around your neighborhood.</p>
-        </div>
-
+      <div className="home-toolbar">
         <div className="home-search">
           <Search size={18} strokeWidth={2} className="muted" />
           <input
@@ -49,6 +34,10 @@ export function HomeScreen({
             aria-label="Search events near you"
           />
         </div>
+        <button className="btn-ghost home-hosted-btn" onClick={onViewHosted}>
+          <CalendarCheck size={18} strokeWidth={2.2} />
+          My Hosted Events
+        </button>
       </div>
 
       <div className="pills" role="tablist" aria-label="Event categories">
@@ -57,28 +46,6 @@ export function HomeScreen({
           <Pill key={c} label={c} active={active === c} onClick={() => setActive(c)} />
         ))}
       </div>
-
-      {showHosted && hosted && (
-        <section className="block">
-          <h2 className="section-title block__title">Your Events</h2>
-          <button
-            className="hosted"
-            onClick={() => onOpenEvent(hosted)}
-            aria-label={`Open ${hosted.title}`}
-          >
-            <StripePlaceholder className="hosted__thumb" showLabel={false} />
-            <span className="hosted__info">
-              <span className="hosted__row">
-                <span className="hosted__tag">Hosting</span>
-                <span className="hosted__time">Today, 10:00 AM</span>
-              </span>
-              <span className="hosted__title">{hosted.title}</span>
-              <span className="hosted__loc">Oakwood Community Center</span>
-            </span>
-            <span className="hosted__cta">Manage</span>
-          </button>
-        </section>
-      )}
 
       <section className="block">
         <h2 className="section-title block__title">Events Around You</h2>
