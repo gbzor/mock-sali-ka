@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff, ArrowRight, MapPin, CalendarDays, QrCode } from "lucide-react";
 import type { Session } from "../useAuth";
 
 type Mode = "login" | "signup";
@@ -52,118 +52,159 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
   };
 
   return (
-    <div className="auth-stage">
-      <div className="auth-card">
-        <div className="auth-brand">
-          <span className="brand__mark">S</span>
-          <span>
-            sali ka<span className="brand__q">?</span>
+    <div className="auth-split">
+      {/* Left — brand panel */}
+      <aside className="auth-hero">
+        <div className="auth-hero__top">
+          <span className="brand__mark auth-hero__mark">S</span>
+          <span className="auth-hero__name">
+            sali ka<span className="auth-hero__q">?</span>
           </span>
         </div>
-        <p className="auth-tagline">Discover events happening around your neighborhood.</p>
 
-        <div className="segmented auth-seg">
-          <button
-            className={`segmented__tab ${mode === "login" ? "segmented__tab--active" : ""}`}
-            onClick={() => switchMode("login")}
-            type="button"
-          >
-            Log In
-          </button>
-          <button
-            className={`segmented__tab ${mode === "signup" ? "segmented__tab--active" : ""}`}
-            onClick={() => switchMode("signup")}
-            type="button"
-          >
-            Sign Up
-          </button>
+        <div className="auth-hero__body">
+          <h1 className="auth-hero__headline">Your neighborhood, always up to something.</h1>
+          <p className="auth-hero__lead">
+            Discover, host, and check in to community events happening right around you.
+          </p>
+
+          <ul className="auth-hero__points">
+            <li>
+              <MapPin size={18} strokeWidth={2.2} />
+              Find events happening near you
+            </li>
+            <li>
+              <CalendarDays size={18} strokeWidth={2.2} />
+              Host and manage your own
+            </li>
+            <li>
+              <QrCode size={18} strokeWidth={2.2} />
+              Check members in with a QR
+            </li>
+          </ul>
         </div>
 
-        <form className="auth-form" onSubmit={handleSubmit} noValidate>
-          {mode === "signup" && (
+        <p className="auth-hero__foot">Community events, reimagined for the web.</p>
+      </aside>
+
+      {/* Right — login / sign-up form */}
+      <div className="auth-panel">
+        <div className="auth-card">
+          <h2 className="auth-card__title">
+            {mode === "login" ? "Welcome back" : "Create your account"}
+          </h2>
+          <p className="auth-card__sub">
+            {mode === "login"
+              ? "Log in to pick up where you left off."
+              : "Join your community in a few seconds."}
+          </p>
+
+          <div className="segmented auth-seg">
+            <button
+              className={`segmented__tab ${mode === "login" ? "segmented__tab--active" : ""}`}
+              onClick={() => switchMode("login")}
+              type="button"
+            >
+              Log In
+            </button>
+            <button
+              className={`segmented__tab ${mode === "signup" ? "segmented__tab--active" : ""}`}
+              onClick={() => switchMode("signup")}
+              type="button"
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <form className="auth-form" onSubmit={handleSubmit} noValidate>
+            {mode === "signup" && (
+              <label className="field">
+                <span className="field__label">Full name</span>
+                <div className="input input--icon">
+                  <User size={18} strokeWidth={2} className="muted" />
+                  <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Jordan Diaz"
+                    autoComplete="name"
+                  />
+                </div>
+                {errors.name && <span className="auth-error">{errors.name}</span>}
+              </label>
+            )}
+
             <label className="field">
-              <span className="field__label">Full name</span>
+              <span className="field__label">Email</span>
               <div className="input input--icon">
-                <User size={18} strokeWidth={2} className="muted" />
+                <Mail size={18} strokeWidth={2} className="muted" />
                 <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Jordan Diaz"
-                  autoComplete="name"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  autoComplete="email"
                 />
               </div>
-              {errors.name && <span className="auth-error">{errors.name}</span>}
+              {errors.email && <span className="auth-error">{errors.email}</span>}
             </label>
-          )}
 
-          <label className="field">
-            <span className="field__label">Email</span>
-            <div className="input input--icon">
-              <Mail size={18} strokeWidth={2} className="muted" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                autoComplete="email"
-              />
-            </div>
-            {errors.email && <span className="auth-error">{errors.email}</span>}
-          </label>
-
-          <label className="field">
-            <span className="field__label">Password</span>
-            <div className="input input--icon">
-              <Lock size={18} strokeWidth={2} className="muted" />
-              <input
-                type={showPw ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 8 characters"
-                autoComplete={mode === "signup" ? "new-password" : "current-password"}
-              />
-              <button
-                type="button"
-                className="auth-pw-toggle"
-                onClick={() => setShowPw((v) => !v)}
-                aria-label={showPw ? "Hide password" : "Show password"}
-              >
-                {showPw ? <EyeOff size={18} strokeWidth={2} /> : <Eye size={18} strokeWidth={2} />}
-              </button>
-            </div>
-            {errors.password && <span className="auth-error">{errors.password}</span>}
-          </label>
-
-          {mode === "signup" && (
             <label className="field">
-              <span className="field__label">Confirm password</span>
+              <span className="field__label">Password</span>
               <div className="input input--icon">
                 <Lock size={18} strokeWidth={2} className="muted" />
                 <input
                   type={showPw ? "text" : "password"}
-                  value={confirm}
-                  onChange={(e) => setConfirm(e.target.value)}
-                  placeholder="Re-enter your password"
-                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 8 characters"
+                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
                 />
+                <button
+                  type="button"
+                  className="auth-pw-toggle"
+                  onClick={() => setShowPw((v) => !v)}
+                  aria-label={showPw ? "Hide password" : "Show password"}
+                >
+                  {showPw ? <EyeOff size={18} strokeWidth={2} /> : <Eye size={18} strokeWidth={2} />}
+                </button>
               </div>
-              {errors.confirm && <span className="auth-error">{errors.confirm}</span>}
+              {errors.password && <span className="auth-error">{errors.password}</span>}
             </label>
-          )}
 
-          <button type="submit" className="btn-primary auth-submit">
-            {mode === "login" ? "Log In" : "Create Account"}
-            <ArrowRight size={18} strokeWidth={2.4} />
+            {mode === "signup" && (
+              <label className="field">
+                <span className="field__label">Confirm password</span>
+                <div className="input input--icon">
+                  <Lock size={18} strokeWidth={2} className="muted" />
+                  <input
+                    type={showPw ? "text" : "password"}
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
+                    placeholder="Re-enter your password"
+                    autoComplete="new-password"
+                  />
+                </div>
+                {errors.confirm && <span className="auth-error">{errors.confirm}</span>}
+              </label>
+            )}
+
+            <button type="submit" className="btn-primary auth-submit">
+              {mode === "login" ? "Log In" : "Create Account"}
+              <ArrowRight size={18} strokeWidth={2.4} />
+            </button>
+          </form>
+
+          <button
+            className="auth-guest"
+            onClick={() => onAuthenticated({ name: "Guest", email: "", guest: true })}
+          >
+            Continue as guest
           </button>
-        </form>
 
-        <button className="auth-guest" onClick={() => onAuthenticated({ name: "Guest", email: "", guest: true })}>
-          Continue as guest
-        </button>
-
-        <p className="auth-foot muted">
-          Demo app — use any email and a password of 8+ characters. No credentials are stored.
-        </p>
+          <p className="auth-foot muted">
+            Demo app — use any email and a password of 8+ characters. No credentials are stored.
+          </p>
+        </div>
       </div>
     </div>
   );
