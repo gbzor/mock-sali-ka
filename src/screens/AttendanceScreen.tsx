@@ -11,7 +11,7 @@ export function AttendanceScreen({ onNavigate }: { onNavigate: (s: ScreenName) =
         <ArrowLeft size={18} strokeWidth={2.2} /> Back
       </button>
       <h1 className="page-title">Attendance</h1>
-      <p className="page-sub">Sunday Farmers Market · Aug 23</p>
+      <p className="page-sub">Naga Sunday Market · Aug 23</p>
 
       <div className="stats-row">
         <div className="stat-card stat-card--green">

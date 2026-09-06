@@ -7,7 +7,7 @@ import { USER } from "../data/events";
 import type { EventItem } from "../types";
 
 const ABOUT =
-  "Come support local farmers, craftsmen, and creators this Sunday! We have fresh summer organic produce, handmade pastries, hot coffee stalls, and interactive games for kids. Dog friendly space. Bring your own reusable shopping bag!";
+  "Come support local Bicol farmers, craftsmen, and creators this weekend! Fresh produce, pili nut treats, handmade crafts, hot Naga coffee, and games for the kids. Family and pet friendly. Bring your own reusable bag!";
 
 export function EventDetailScreen({
   event,
@@ -61,7 +61,7 @@ export function EventDetailScreen({
             </span>
             <span className="info-stack">
               <strong>{event.location}</strong>
-              <span className="muted">Main Field Grass Area, California</span>
+              <span className="muted">Centro, Naga City, Camarines Sur</span>
             </span>
             <button className="directions">
               <Navigation size={15} strokeWidth={2.2} /> Directions

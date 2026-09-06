@@ -13,7 +13,7 @@ export function QrScannerScreen({ onNavigate }: { onNavigate: (s: ScreenName) =>
       <button className="context-card card">
         <span className="context-card__text">
           <span className="muted">Scanning for</span>
-          <strong>Sunday Farmers Market</strong>
+          <strong>Naga Sunday Market</strong>
         </span>
         <ChevronDown size={20} strokeWidth={2.2} className="muted" />
       </button>
