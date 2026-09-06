@@ -85,7 +85,7 @@ export function EventDetailScreen({
           className={`btn-primary detail-rsvp ${rsvp ? "detail-rsvp--done" : ""}`}
           onClick={() => setRsvp((v) => !v)}
         >
-          {rsvp ? "You're going ✓" : "RSVP to This Event"}
+          {rsvp ? "You're going ✓" : "Join This Event"}
         </button>
       </div>
     </div>
