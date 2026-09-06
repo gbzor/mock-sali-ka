@@ -1119,6 +1119,128 @@
   font-weight: 700;
   margin: 0 0 22px;
 }
+.host-link {
+  color: var(--green-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.16s ease;
+}
+.host-link:hover {
+  color: var(--green);
+}
+
+/* Host public profile */
+.host-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 32px 24px 26px;
+}
+.host-avatar {
+  margin-bottom: 10px;
+}
+.host-name {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.host-role {
+  font-weight: 700;
+}
+.host-stats {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0 22px;
+}
+.host-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 84px;
+  padding: 12px 10px;
+  border-radius: var(--r-md);
+  background: var(--surface-alt);
+}
+.host-stat strong {
+  font-size: 20px;
+  font-weight: 900;
+}
+.host-stat span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.follow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 180px;
+  padding: 12px 24px;
+  border-radius: var(--r-pill);
+  font-weight: 800;
+  font-size: 15px;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.follow-btn--on {
+  background: var(--green-soft);
+  color: var(--green-dark);
+  border: 1px solid var(--green);
+}
+.follow-btn--on:hover {
+  background: #e3f0e9;
+}
+
+.rating-card {
+  margin-top: 20px;
+  padding: 22px 24px;
+}
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.rating-big {
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+}
+.stars,
+.stars-input {
+  display: inline-flex;
+  gap: 3px;
+  color: #e0a417;
+}
+.stars-input button {
+  color: inherit;
+  display: grid;
+  place-items: center;
+  padding: 2px;
+  transition: transform 0.12s ease;
+}
+.stars-input button:hover {
+  transform: scale(1.12);
+}
+.rating-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 18px 0;
+}
+.rate-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rate-thanks {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--green-dark);
+}
 .info-card {
   padding: 6px 20px;
 }

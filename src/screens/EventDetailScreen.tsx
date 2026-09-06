@@ -12,9 +12,11 @@ const ABOUT =
 export function EventDetailScreen({
   event,
   onBack,
+  onOpenHost,
 }: {
   event: EventItem;
   onBack: () => void;
+  onOpenHost: () => void;
 }) {
   const [fav, setFav] = useState(false);
   const [rsvp, setRsvp] = useState(false);
@@ -42,7 +44,12 @@ export function EventDetailScreen({
           <CategoryBadge category={event.category} />
         </div>
         <h1 className="detail-title">{event.title}</h1>
-        <p className="detail-host">Hosted by {USER.name}</p>
+        <p className="detail-host">
+          Hosted by{" "}
+          <button className="host-link" onClick={onOpenHost}>
+            {USER.name}
+          </button>
+        </p>
 
         <div className="info-card card">
           <div className="info-row">

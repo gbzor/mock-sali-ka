@@ -3,6 +3,7 @@ export type Category = "Market" | "Music" | "Sports" | "Volunteer";
 export type ScreenName =
   | "home"
   | "hosted"
+  | "host-profile"
   | "calendar"
   | "map"
   | "create-event"

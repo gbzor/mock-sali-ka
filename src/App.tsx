@@ -8,6 +8,7 @@ import { MapScreen } from "./screens/MapScreen";
 import { CreateEventScreen } from "./screens/CreateEventScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
 import { EventDetailScreen } from "./screens/EventDetailScreen";
+import { HostProfileScreen } from "./screens/HostProfileScreen";
 import { QrScannerScreen } from "./screens/QrScannerScreen";
 import { AttendanceScreen } from "./screens/AttendanceScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
@@ -59,7 +60,14 @@ export default function App() {
           <ProfileScreen onNavigate={navigate} onOpenEvent={() => openEvent(FEED_EVENTS[1])} />
         )}
         {screen === "event-detail" && (
-          <EventDetailScreen event={activeEvent} onBack={() => navigate("home")} />
+          <EventDetailScreen
+            event={activeEvent}
+            onBack={() => navigate("home")}
+            onOpenHost={() => navigate("host-profile")}
+          />
+        )}
+        {screen === "host-profile" && (
+          <HostProfileScreen onBack={() => navigate("event-detail")} onOpenEvent={openEvent} />
         )}
         {screen === "qr-scanner" && <QrScannerScreen onNavigate={navigate} />}
         {screen === "attendance" && <AttendanceScreen onNavigate={navigate} />}
