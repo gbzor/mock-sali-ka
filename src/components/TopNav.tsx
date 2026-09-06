@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Home, CalendarDays, MapPin, User, Bell, Plus, Search, Menu, X } from "lucide-react";
 import type { ScreenName } from "../types";
-import { USER } from "../data/events";
+import { initialsOf } from "../useAuth";
 
 interface NavLink {
   key: ScreenName;
@@ -19,9 +19,11 @@ const LINKS: NavLink[] = [
 export function TopNav({
   active,
   onNavigate,
+  userName,
 }: {
   active: ScreenName;
   onNavigate: (s: ScreenName) => void;
+  userName: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -81,7 +83,7 @@ export function TopNav({
           </button>
 
           <button className="topnav__avatar" onClick={() => go("profile")} aria-label="Your profile">
-            {USER.initials}
+            {initialsOf(userName)}
           </button>
 
           <button

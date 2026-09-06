@@ -1388,6 +1388,98 @@ button.setting-row:hover {
 }
 
 /* ---------------------------------------------------------------------------
+   Auth (login / sign-up gate)
+   --------------------------------------------------------------------------- */
+.auth-stage {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 424px;
+  padding: 36px 32px 30px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(160%) blur(20px);
+  -webkit-backdrop-filter: saturate(160%) blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-float);
+  animation: page-in 0.3s ease both;
+}
+.auth-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.auth-tagline {
+  text-align: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin: 12px 0 24px;
+}
+.auth-seg {
+  display: flex;
+  width: 100%;
+  margin: 0 0 22px;
+}
+.auth-seg .segmented__tab {
+  flex: 1;
+  text-align: center;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.auth-pw-toggle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--text-muted);
+  transition: color 0.16s ease;
+}
+.auth-pw-toggle:hover {
+  color: var(--text);
+}
+.auth-error {
+  color: #c0453e;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.auth-submit {
+  width: 100%;
+  margin-top: 4px;
+  padding: 14px;
+  font-size: 15.5px;
+}
+.auth-guest {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 16px;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--green-dark);
+}
+.auth-guest:hover {
+  text-decoration: underline;
+}
+.auth-foot {
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin: 18px 0 0;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
    Responsive
    --------------------------------------------------------------------------- */
 @media (max-width: 900px) {

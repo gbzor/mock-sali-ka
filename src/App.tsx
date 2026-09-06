@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { TopNav } from "./components/TopNav";
+import { AuthScreen } from "./screens/AuthScreen";
 import { HomeScreen } from "./screens/HomeScreen";
 import { CalendarScreen } from "./screens/CalendarScreen";
 import { MapScreen } from "./screens/MapScreen";
@@ -10,9 +11,11 @@ import { QrScannerScreen } from "./screens/QrScannerScreen";
 import { AttendanceScreen } from "./screens/AttendanceScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { FEED_EVENTS } from "./data/events";
+import { useAuth } from "./useAuth";
 import type { EventItem, ScreenName } from "./types";
 
 export default function App() {
+  const { session, login, logout } = useAuth();
   const [screen, setScreen] = useState<ScreenName>("home");
   const [activeEvent, setActiveEvent] = useState<EventItem>(FEED_EVENTS[0]);
 
@@ -30,11 +33,21 @@ export default function App() {
     [navigate]
   );
 
+  const handleLogout = useCallback(() => {
+    logout();
+    setScreen("home");
+  }, [logout]);
+
+  // Auth gate — the login / sign-up screen is shown first, before the app.
+  if (!session) {
+    return <AuthScreen onAuthenticated={login} />;
+  }
+
   return (
     <div className="app">
-      <TopNav active={screen} onNavigate={navigate} />
+      <TopNav active={screen} onNavigate={navigate} userName={session.name} />
       <main>
-        {screen === "home" && <HomeScreen onOpenEvent={openEvent} />}
+        {screen === "home" && <HomeScreen onOpenEvent={openEvent} userName={session.name} />}
         {screen === "calendar" && <CalendarScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} />}
         {screen === "map" && <MapScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} />}
         {screen === "create-event" && <CreateEventScreen onNavigate={navigate} />}
@@ -46,7 +59,9 @@ export default function App() {
         )}
         {screen === "qr-scanner" && <QrScannerScreen onNavigate={navigate} />}
         {screen === "attendance" && <AttendanceScreen onNavigate={navigate} />}
-        {screen === "settings" && <SettingsScreen onNavigate={navigate} />}
+        {screen === "settings" && (
+          <SettingsScreen onNavigate={navigate} onLogout={handleLogout} session={session} />
+        )}
       </main>
 
       <footer className="app-footer">

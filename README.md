@@ -18,6 +18,10 @@ Nunito typography.
 
 ## Features
 
+- **Login / Sign-up gate** — a login and account-creation screen shown first, with
+  client-side validation, show/hide password, and a "continue as guest" option. The
+  signed-in name flows into the greeting, avatar, and settings. See the security note
+  below — this is a demo gate, not real authentication.
 - **Home feed** — greeting header, live category filtering (All / Market / Music /
   Sports / Volunteer), a hosted-event banner, and a responsive grid of event cards.
 - **Schedule** — an interactive August 2026 month calendar with event markers and a
@@ -169,6 +173,25 @@ Security was treated as a requirement, not an afterthought:
   (stylesheet + font files), which is explicitly allowed in the CSP.
 - **Source maps disabled** in the production build so source is not exposed.
 - **Dependencies:** `npm audit` reports **0 vulnerabilities**.
+
+### Authentication (demo gate)
+
+The login / sign-up screen is a **front-end UX gate only — not real
+authentication**, because this app has no backend:
+
+- **No password is ever stored, transmitted, or persisted.** On submit, the app
+  validates format (valid email, 8+ char password, matching confirmation) and then
+  discards the password entirely.
+- Only a **non-sensitive session marker** (display name + email) is kept in
+  `sessionStorage`, which is per-tab and cleared when the tab closes.
+- The gate does **not** protect any data — all content is public sample data.
+
+To make this production-grade authentication, add a backend and:
+- hash passwords server-side (e.g. bcrypt/argon2) — never store or compare plaintext;
+- serve everything over HTTPS and issue sessions via `httpOnly`, `Secure`,
+  `SameSite` cookies (not `localStorage`/`sessionStorage`);
+- add rate limiting / lockout on login, and validate all input server-side;
+- keep all credentials and API keys on the server, never in client or `VITE_` vars.
 
 If you extend this into a full-stack app, keep all authentication, database
 credentials, and private API keys on the server side — never in client code or

@@ -5,9 +5,16 @@ import { StripePlaceholder } from "../components/StripePlaceholder";
 import { CATEGORIES, FEED_EVENTS, USER } from "../data/events";
 import type { Category, EventItem } from "../types";
 
-export function HomeScreen({ onOpenEvent }: { onOpenEvent: (e: EventItem) => void }) {
+export function HomeScreen({
+  onOpenEvent,
+  userName,
+}: {
+  onOpenEvent: (e: EventItem) => void;
+  userName?: string;
+}) {
   const [active, setActive] = useState<Category | "All">("All");
   const [query, setQuery] = useState("");
+  const firstName = (userName || USER.firstName).trim().split(/\s+/)[0];
 
   const hosted = FEED_EVENTS.find((e) => e.hosting);
 
@@ -27,7 +34,7 @@ export function HomeScreen({ onOpenEvent }: { onOpenEvent: (e: EventItem) => voi
       <div className="home-hero">
         <div>
           <h1 className="page-title">
-            sali ka, {USER.firstName}
+            sali ka, {firstName}
             <span className="home-hero__q">?</span>
           </h1>
           <p className="page-sub">Discover events happening around your neighborhood.</p>

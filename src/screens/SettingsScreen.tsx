@@ -1,11 +1,20 @@
 import { useState } from "react";
 import { ArrowLeft, ChevronRight, LogOut } from "lucide-react";
-import { USER } from "../data/events";
+import { initialsOf, type Session } from "../useAuth";
 import type { ScreenName } from "../types";
 
 type ToggleKey = "push" | "email" | "dark";
 
-export function SettingsScreen({ onNavigate }: { onNavigate: (s: ScreenName) => void }) {
+export function SettingsScreen({
+  onNavigate,
+  onLogout,
+  session,
+}: {
+  onNavigate: (s: ScreenName) => void;
+  onLogout: () => void;
+  session: Session;
+}) {
+  const displayEmail = session.email || "guest@salika.app";
   const [toggles, setToggles] = useState<Record<ToggleKey, boolean>>({
     push: true,
     email: false,
@@ -22,12 +31,12 @@ export function SettingsScreen({ onNavigate }: { onNavigate: (s: ScreenName) => 
       <h1 className="page-title">Settings</h1>
 
       <div className="settings-summary card">
-        <span className="settings-summary__avatar">{USER.initials}</span>
+        <span className="settings-summary__avatar">{initialsOf(session.name)}</span>
         <span className="settings-summary__text">
-          <strong>{USER.name}</strong>
-          <span className="muted">{USER.email}</span>
+          <strong>{session.name}</strong>
+          <span className="muted">{displayEmail}</span>
         </span>
-        <span className="settings-summary__badge">PRO</span>
+        <span className="settings-summary__badge">{session.guest ? "GUEST" : "PRO"}</span>
       </div>
 
       <SettingsGroup title="Account">
@@ -66,7 +75,7 @@ export function SettingsScreen({ onNavigate }: { onNavigate: (s: ScreenName) => 
         <Row label="Terms & Privacy" chevron />
       </SettingsGroup>
 
-      <button className="logout-btn" onClick={() => onNavigate("home")}>
+      <button className="logout-btn" onClick={onLogout}>
         <LogOut size={18} strokeWidth={2.2} /> Log Out
       </button>
       <p className="version-text muted">Version 2.4.1 (40217)</p>
