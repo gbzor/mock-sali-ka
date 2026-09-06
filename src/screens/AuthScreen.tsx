@@ -109,11 +109,9 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
           <h2 className="auth-card__title">
             {mode === "login" ? "sali na!" : "Create your account"}
           </h2>
-          <p className="auth-card__sub">
-            {mode === "login"
-              ? "Log in to pick up where you left off."
-              : "Join your community in a few seconds."}
-          </p>
+          {mode === "signup" && (
+            <p className="auth-card__sub">Join your community in a few seconds.</p>
+          )}
 
           <div className="segmented auth-seg">
             <button
