@@ -107,7 +107,7 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
       <div className="auth-panel">
         <div className="auth-card">
           <h2 className="auth-card__title">
-            {mode === "login" ? "Welcome back" : "Create your account"}
+            {mode === "login" ? "sali na!" : "Create your account"}
           </h2>
           <p className="auth-card__sub">
             {mode === "login"
