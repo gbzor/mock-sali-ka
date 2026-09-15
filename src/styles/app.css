@@ -1329,6 +1329,65 @@
   font-size: 15px;
 }
 
+/* Attendance QR modal */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(54, 50, 47, 0.45);
+  backdrop-filter: blur(3px);
+  animation: page-in 0.16s ease both;
+}
+.qr-modal__card {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  padding: 30px 24px 26px;
+  border-radius: var(--r-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+  text-align: center;
+}
+.qr-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  color: var(--text-muted);
+  transition: background 0.16s ease;
+}
+.qr-modal__close:hover {
+  background: var(--surface-alt);
+}
+.qr-modal__title {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 4px;
+}
+.qr-modal__sub {
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+.qr-modal__code {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  margin: 0 auto 16px;
+  width: fit-content;
+  border-radius: var(--r-lg);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
 /* ---------------------------------------------------------------------------
    QR scanner
    --------------------------------------------------------------------------- */

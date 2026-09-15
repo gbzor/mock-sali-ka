@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowLeft, Heart, CalendarDays, MapPin, Navigation } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Heart, CalendarDays, MapPin, Navigation, QrCode, X } from "lucide-react";
 import { StripePlaceholder } from "../components/StripePlaceholder";
 import { CategoryBadge } from "../components/CategoryBadge";
 import { AvatarGroup } from "../components/Avatar";
@@ -20,8 +20,19 @@ export function EventDetailScreen({
   onOpenHost: () => void;
 }) {
   const [fav, setFav] = useState(false);
-  const [rsvp, setRsvp] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
   const notify = useToast();
+
+  const attending = Boolean(event.attending) || joined;
+
+  // Close the QR overlay on Escape.
+  useEffect(() => {
+    if (!qrOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setQrOpen(false);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [qrOpen]);
 
   const handleDirections = async () => {
     try {
@@ -101,15 +112,40 @@ export function EventDetailScreen({
 
         {event.hosting ? (
           <div className="detail-hosting">You're hosting this event</div>
+        ) : attending ? (
+          <button className="btn-primary detail-rsvp" onClick={() => setQrOpen(true)}>
+            <QrCode size={18} strokeWidth={2.2} /> Show My QR for Attendance
+          </button>
         ) : (
           <button
-            className={`btn-primary detail-rsvp ${rsvp ? "detail-rsvp--done" : ""}`}
-            onClick={() => setRsvp((v) => !v)}
+            className="btn-primary detail-rsvp"
+            onClick={() => {
+              setJoined(true);
+              notify("You're going! Show your QR to check in.");
+            }}
           >
-            {rsvp ? "You're going ✓" : "Join This Event"}
+            Join This Event
           </button>
         )}
       </div>
+
+      {qrOpen && (
+        <div className="qr-modal" role="dialog" aria-modal="true" onClick={() => setQrOpen(false)}>
+          <div className="qr-modal__card" onClick={(e) => e.stopPropagation()}>
+            <button className="qr-modal__close" onClick={() => setQrOpen(false)} aria-label="Close">
+              <X size={20} strokeWidth={2.2} />
+            </button>
+            <h3 className="qr-modal__title">Attendance QR</h3>
+            <p className="muted qr-modal__sub">
+              Show this at <strong>{event.title}</strong> to check in
+            </p>
+            <div className="qr-modal__code" aria-hidden="true">
+              <QrCode size={180} strokeWidth={1.2} />
+            </div>
+            <span className="qr-card__id">ID #{USER.membershipId}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

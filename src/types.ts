@@ -23,4 +23,5 @@ export interface EventItem {
   location: string;
   going: number;
   hosting?: boolean;
+  attending?: boolean;
 }

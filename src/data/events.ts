@@ -24,6 +24,7 @@ export const FEED_EVENTS: EventItem[] = [
     dateLine: "Tue, Aug 25 · 6:30 PM",
     location: "Avenue Square, Magsaysay Ave",
     going: 45,
+    attending: true,
   },
   {
     id: "naga-river-cleanup",
@@ -34,6 +35,7 @@ export const FEED_EVENTS: EventItem[] = [
     dateLine: "Sat, Aug 29 · 8:00 AM",
     location: "Naga River Esplanade",
     going: 8,
+    attending: true,
   },
   {
     id: "frisbee-friendly",
