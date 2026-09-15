@@ -214,10 +214,6 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
           >
             Continue as guest
           </button>
-
-          <p className="auth-foot muted">
-            Demo app — use any email and a password of 8+ characters. No credentials are stored.
-          </p>
         </div>
       </div>
     </div>
