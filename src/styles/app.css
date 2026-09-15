@@ -1313,6 +1313,21 @@
 .detail-rsvp--done {
   background: var(--green-dark);
 }
+.detail-hosting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  margin-top: 30px;
+  border-radius: var(--r-pill);
+  background: var(--green-soft);
+  color: var(--green-dark);
+  border: 1px solid #cfe3cf;
+  font-weight: 800;
+  font-size: 15px;
+}
 
 /* ---------------------------------------------------------------------------
    QR scanner

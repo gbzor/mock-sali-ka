@@ -99,12 +99,16 @@ export function EventDetailScreen({
           <p className="detail-about">{ABOUT}</p>
         </section>
 
-        <button
-          className={`btn-primary detail-rsvp ${rsvp ? "detail-rsvp--done" : ""}`}
-          onClick={() => setRsvp((v) => !v)}
-        >
-          {rsvp ? "You're going ✓" : "Join This Event"}
-        </button>
+        {event.hosting ? (
+          <div className="detail-hosting">You're hosting this event</div>
+        ) : (
+          <button
+            className={`btn-primary detail-rsvp ${rsvp ? "detail-rsvp--done" : ""}`}
+            onClick={() => setRsvp((v) => !v)}
+          >
+            {rsvp ? "You're going ✓" : "Join This Event"}
+          </button>
+        )}
       </div>
     </div>
   );
