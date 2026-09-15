@@ -139,7 +139,7 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Jordan Diaz"
+                    placeholder="Kyle Sta. Rosa"
                     autoComplete="name"
                   />
                 </div>
@@ -210,7 +210,7 @@ export function AuthScreen({ onAuthenticated }: { onAuthenticated: (s: Session) 
 
           <button
             className="auth-guest"
-            onClick={() => onAuthenticated({ name: "Guest", email: "", guest: true })}
+            onClick={() => onAuthenticated({ name: "Kyle Sta. Rosa", email: "", guest: true })}
           >
             Continue as guest
           </button>
