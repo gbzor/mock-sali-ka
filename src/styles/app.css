@@ -1329,6 +1329,20 @@
   font-size: 15px;
 }
 
+.detail-organizer {
+  margin-top: 30px;
+}
+.detail-organizer .detail-hosting {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.detail-organizer .organizer-tools {
+  margin-top: 0;
+}
+.host-stats--last {
+  margin-bottom: 4px;
+}
+
 /* Attendance QR modal */
 .qr-modal {
   position: fixed;

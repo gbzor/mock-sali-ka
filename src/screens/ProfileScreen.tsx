@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings, QrCode, ScanLine, ClipboardList, Star } from "lucide-react";
+import { Settings, QrCode, Star } from "lucide-react";
 import { ScheduleItem } from "../components/ScheduleItem";
 import { GOING_LIST, HOST_STATS, HOSTED_RATINGS, USER } from "../data/events";
 import type { ScreenName } from "../types";
@@ -29,7 +29,7 @@ export function ProfileScreen({
           <p className="muted">{USER.memberSince}</p>
 
           {/* Followers + reputation */}
-          <div className="host-stats">
+          <div className="host-stats host-stats--last">
             <div className="host-stat">
               <strong>{HOST_STATS.hosted}</strong>
               <span>Events</span>
@@ -44,15 +44,6 @@ export function ProfileScreen({
               </strong>
               <span>Rating</span>
             </div>
-          </div>
-
-          <div className="organizer-tools">
-            <button className="tool-btn" onClick={() => onNavigate("qr-scanner")}>
-              <ScanLine size={18} strokeWidth={2.2} /> Check-in Scanner
-            </button>
-            <button className="tool-btn" onClick={() => onNavigate("attendance")}>
-              <ClipboardList size={18} strokeWidth={2.2} /> Attendance
-            </button>
           </div>
         </section>
 

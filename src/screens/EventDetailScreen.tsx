@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, Heart, CalendarDays, MapPin, Navigation, QrCode, X } from "lucide-react";
+import { ArrowLeft, Heart, CalendarDays, MapPin, Navigation, QrCode, X, ScanLine, ClipboardList } from "lucide-react";
 import { StripePlaceholder } from "../components/StripePlaceholder";
 import { CategoryBadge } from "../components/CategoryBadge";
 import { AvatarGroup } from "../components/Avatar";
 import { useToast } from "../components/Toast";
 import { USER } from "../data/events";
-import type { EventItem } from "../types";
+import type { EventItem, ScreenName } from "../types";
 
 const ABOUT =
   "Come support local Bicol farmers, craftsmen, and creators this weekend! Fresh produce, pili nut treats, handmade crafts, hot Naga coffee, and games for the kids. Family and pet friendly. Bring your own reusable bag!";
@@ -14,10 +14,12 @@ export function EventDetailScreen({
   event,
   onBack,
   onOpenHost,
+  onNavigate,
 }: {
   event: EventItem;
   onBack: () => void;
   onOpenHost: () => void;
+  onNavigate: (s: ScreenName) => void;
 }) {
   const [fav, setFav] = useState(false);
   const [joined, setJoined] = useState(false);
@@ -111,7 +113,17 @@ export function EventDetailScreen({
         </section>
 
         {event.hosting ? (
-          <div className="detail-hosting">You're hosting this event</div>
+          <div className="detail-organizer">
+            <div className="detail-hosting">You're hosting this event</div>
+            <div className="organizer-tools">
+              <button className="tool-btn" onClick={() => onNavigate("qr-scanner")}>
+                <ScanLine size={18} strokeWidth={2.2} /> Check-in Scanner
+              </button>
+              <button className="tool-btn" onClick={() => onNavigate("attendance")}>
+                <ClipboardList size={18} strokeWidth={2.2} /> Attendance
+              </button>
+            </div>
+          </div>
         ) : attending ? (
           <button className="btn-primary detail-rsvp" onClick={() => setQrOpen(true)}>
             <QrCode size={18} strokeWidth={2.2} /> Show My QR for Attendance

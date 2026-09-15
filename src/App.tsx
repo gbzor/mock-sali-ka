@@ -68,6 +68,7 @@ export default function App() {
             event={activeEvent}
             onBack={() => navigate("home")}
             onOpenHost={() => navigate("host-profile")}
+            onNavigate={navigate}
           />
         )}
         {screen === "host-profile" && (
