@@ -2038,8 +2038,10 @@ button.setting-row:hover {
   }
 }
 
-/* Notifications dropdown: on small screens, anchor to the viewport, not the bell */
-@media (max-width: 620px) {
+/* Notifications dropdown: on the mobile layout, anchor to the viewport, not the
+   bell button (otherwise it hangs off-screen since the bell isn't the rightmost
+   action). Matches the 760px breakpoint where the mobile nav takes over. */
+@media (max-width: 760px) {
   .notif {
     position: static;
   }
