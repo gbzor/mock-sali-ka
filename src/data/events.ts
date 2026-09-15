@@ -107,11 +107,11 @@ export const ATTENDEES = [
 ];
 
 export const USER = {
-  name: "Andrei Santos",
-  firstName: "Andrei",
-  email: "andrei.santos@community.com",
+  name: "Kyle Sta. Rosa",
+  firstName: "Kyle",
+  email: "kyle.starosa@community.com",
   memberSince: "Member since Mar 2024",
-  initials: "AS",
+  initials: "KR",
   membershipId: "CMN-40217",
 };
 
