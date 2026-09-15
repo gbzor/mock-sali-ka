@@ -82,7 +82,7 @@ export default function App() {
       </main>
 
       <footer className="app-footer">
-        <span>Sali Ka — community events, reimagined for the web.</span>
+        <span>Sali Ka by BitBit • 2026</span>
         <span className="muted">Front-end demo · sample data only</span>
       </footer>
     </div>
