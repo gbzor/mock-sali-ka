@@ -1,12 +1,14 @@
 import { useState, type FormEvent } from "react";
-import { Plus, Clock, MapPin, Check } from "lucide-react";
+import { Plus, Clock, MapPin, Check, ImagePlus } from "lucide-react";
 import { CATEGORIES } from "../data/events";
 import { DatePicker } from "../components/DatePicker";
+import { StripePlaceholder } from "../components/StripePlaceholder";
 import type { Category, ScreenName } from "../types";
 
 export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) => void }) {
   const [category, setCategory] = useState<Category>("Market");
   const [date, setDate] = useState<Date | null>(null);
+  const [cover, setCover] = useState(false);
   const [promote, setPromote] = useState(true);
   const [posted, setPosted] = useState(false);
 
@@ -23,13 +25,22 @@ export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) 
       <p className="page-sub">Share what your community is up to.</p>
 
       <form className="form-card card" onSubmit={handleSubmit}>
-        <button type="button" className="upload-area">
-          <Plus size={22} strokeWidth={2.4} />
-          <span>add cover photo</span>
-        </button>
+        {cover ? (
+          <button type="button" className="upload-preview" onClick={() => setCover(false)}>
+            <StripePlaceholder className="upload-preview__img" showLabel={false} />
+            <span className="upload-preview__badge">
+              <ImagePlus size={15} strokeWidth={2.2} /> Change cover
+            </span>
+          </button>
+        ) : (
+          <button type="button" className="upload-area" onClick={() => setCover(true)}>
+            <Plus size={22} strokeWidth={2.4} />
+            <span>add cover photo</span>
+          </button>
+        )}
 
         <Field label="Event Title">
-          <input className="input" placeholder="e.g. Sunday Farmers Market" required />
+          <input className="input" placeholder="e.g. Naga Sunday Market" required />
         </Field>
 
         <div className="form-row">
@@ -47,7 +58,7 @@ export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) 
         <Field label="Location">
           <div className="input input--icon">
             <MapPin size={18} strokeWidth={2} className="muted" />
-            <input placeholder="Oakwood Community Park" required />
+            <input placeholder="Plaza Rizal, Naga City" required />
           </div>
         </Field>
 

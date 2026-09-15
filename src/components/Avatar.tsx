@@ -3,7 +3,7 @@
  * shipping image files — keeps the bundle self-contained with no external assets.
  */
 const GRADIENTS = [
-  "linear-gradient(135deg, #3d8e6f, #265a45)",
+  "linear-gradient(135deg, #2E7D32, #1B5E20)",
   "linear-gradient(135deg, #de7b45, #c25f2c)",
   "linear-gradient(135deg, #4b44de, #322caf)",
   "linear-gradient(135deg, #1d75b5, #135a8d)",

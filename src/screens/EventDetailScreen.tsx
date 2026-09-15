@@ -3,6 +3,7 @@ import { ArrowLeft, Heart, CalendarDays, MapPin, Navigation } from "lucide-react
 import { StripePlaceholder } from "../components/StripePlaceholder";
 import { CategoryBadge } from "../components/CategoryBadge";
 import { AvatarGroup } from "../components/Avatar";
+import { useToast } from "../components/Toast";
 import { USER } from "../data/events";
 import type { EventItem } from "../types";
 
@@ -20,6 +21,16 @@ export function EventDetailScreen({
 }) {
   const [fav, setFav] = useState(false);
   const [rsvp, setRsvp] = useState(false);
+  const notify = useToast();
+
+  const handleDirections = async () => {
+    try {
+      await navigator.clipboard.writeText(event.location);
+      notify("Location copied to clipboard");
+    } catch {
+      notify(`Directions to ${event.location}`);
+    }
+  };
 
   return (
     <div className="page page--narrow">
@@ -70,7 +81,7 @@ export function EventDetailScreen({
               <strong>{event.location}</strong>
               <span className="muted">Centro, Naga City, Camarines Sur</span>
             </span>
-            <button className="directions">
+            <button className="directions" onClick={handleDirections}>
               <Navigation size={15} strokeWidth={2.2} /> Directions
             </button>
           </div>

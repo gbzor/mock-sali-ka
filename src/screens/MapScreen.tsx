@@ -1,6 +1,8 @@
 import { Search, MapPin } from "lucide-react";
 import { CategoryBadge } from "../components/CategoryBadge";
 import { MAP_CARDS } from "../data/events";
+import { useToast } from "../components/Toast";
+import type { ScreenName } from "../types";
 
 const PINS = [
   { top: "22%", left: "28%" },
@@ -10,7 +12,14 @@ const PINS = [
   { top: "68%", left: "62%" },
 ];
 
-export function MapScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
+export function MapScreen({
+  onOpenEvent,
+  onNavigate,
+}: {
+  onOpenEvent: () => void;
+  onNavigate: (s: ScreenName) => void;
+}) {
+  const notify = useToast();
   return (
     <div className="page">
       <h1 className="page-title">Explore</h1>
@@ -19,10 +28,13 @@ export function MapScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
       <div className="map-layout">
         <div className="map-canvas card">
           <div className="map-grid" aria-hidden="true" />
-          <div className="map-search">
+          <button
+            className="map-search"
+            onClick={() => notify("Showing events in this area (demo)")}
+          >
             <Search size={18} strokeWidth={2} className="muted" />
             <span className="muted">Search this area</span>
-          </div>
+          </button>
           {PINS.map((p, i) => (
             <button
               key={i}
@@ -39,7 +51,9 @@ export function MapScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
         <aside className="map-list">
           <div className="map-list__head">
             <strong>{MAP_CARDS.length} events near you</strong>
-            <span className="map-list__link">List View</span>
+            <button className="map-list__link" onClick={() => onNavigate("home")}>
+              List View
+            </button>
           </div>
           <div className="stack">
             {MAP_CARDS.map((c) => (

@@ -1,8 +1,29 @@
+import { useState } from "react";
 import { ArrowLeft, ChevronDown, QrCode, CheckCircle2, ScanLine } from "lucide-react";
 import { RECENT_CHECKINS } from "../data/events";
+import { useToast } from "../components/Toast";
 import type { ScreenName } from "../types";
 
+interface Checkin {
+  id: string;
+  ago: string;
+}
+
+function randomId() {
+  return "CMN-" + String(Math.floor(10000 + Math.random() * 89999));
+}
+
 export function QrScannerScreen({ onNavigate }: { onNavigate: (s: ScreenName) => void }) {
+  const [checkins, setCheckins] = useState<Checkin[]>(RECENT_CHECKINS);
+  const notify = useToast();
+
+  // Frontend-only: simulate scanning a member QR (nothing is saved).
+  const simulateScan = () => {
+    const id = randomId();
+    setCheckins((list) => [{ id, ago: "just now" }, ...list]);
+    notify(`Checked in ${id}`);
+  };
+
   return (
     <div className="page page--narrow">
       <button className="back-link" onClick={() => onNavigate("profile")}>
@@ -10,7 +31,7 @@ export function QrScannerScreen({ onNavigate }: { onNavigate: (s: ScreenName) =>
       </button>
       <h1 className="page-title">Check-In Scanner</h1>
 
-      <button className="context-card card">
+      <button className="context-card card" onClick={() => notify("Only one active event in this demo")}>
         <span className="context-card__text">
           <span className="muted">Scanning for</span>
           <strong>Naga Sunday Market</strong>
@@ -18,21 +39,21 @@ export function QrScannerScreen({ onNavigate }: { onNavigate: (s: ScreenName) =>
         <ChevronDown size={20} strokeWidth={2.2} className="muted" />
       </button>
 
-      <div className="scanner card">
+      <button className="scanner card" onClick={simulateScan} aria-label="Simulate a QR scan">
         <span className="scanner__bracket scanner__bracket--tl" />
         <span className="scanner__bracket scanner__bracket--tr" />
         <span className="scanner__bracket scanner__bracket--bl" />
         <span className="scanner__bracket scanner__bracket--br" />
         <QrCode size={120} strokeWidth={1.2} className="scanner__code" />
         <span className="scanner__line" />
-        <p className="scanner__hint">Point camera at member's QR code</p>
-      </div>
+        <p className="scanner__hint">Tap to simulate scanning a member's QR code</p>
+      </button>
 
       <section className="block">
         <h2 className="section-title block__title">Recently checked in</h2>
         <div className="stack">
-          {RECENT_CHECKINS.map((c) => (
-            <div className="checkin-row card" key={c.id}>
+          {checkins.map((c, i) => (
+            <div className="checkin-row card" key={`${c.id}-${i}`}>
               <span className="checkin-row__left">
                 <span className="checkin-row__avatar">
                   <ScanLine size={18} strokeWidth={2.2} />

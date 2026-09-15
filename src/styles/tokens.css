@@ -18,9 +18,9 @@
   --border-strong: #dcd8cc;
 
   /* Brand — emerald green */
-  --green: #3d8e6f;
-  --green-dark: #265a45;
-  --green-soft: #eff6f2;
+  --green: #2E7D32;
+  --green-dark: #1B5E20;
+  --green-soft: #E9F2E9;
 
   /* Category accents */
   --orange: #de7b45;
@@ -40,7 +40,7 @@
   /* Shadows */
   --shadow-card: 0 1px 2px rgba(54, 50, 47, 0.04), 0 6px 16px rgba(54, 50, 47, 0.06);
   --shadow-float: 0 8px 24px rgba(54, 50, 47, 0.12);
-  --shadow-fab: 0 8px 20px rgba(61, 142, 111, 0.4);
+  --shadow-fab: 0 8px 20px rgba(46, 125, 50, 0.4);
 
   /* Layout */
   --content-w: 1120px;

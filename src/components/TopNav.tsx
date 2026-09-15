@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Home, CalendarDays, MapPin, CalendarCheck, Bell, Plus, Menu, X } from "lucide-react";
 import type { ScreenName } from "../types";
 import { initialsOf } from "../useAuth";
 import { ParrotLogo } from "./ParrotLogo";
+
+const NOTIFICATIONS = [
+  { title: "Naga Sunday Market starts soon", meta: "Today · 10:00 AM · Plaza Rizal" },
+  { title: "Maria Santos is now going to your event", meta: "2h ago" },
+  { title: "New event near you: Acoustic Nights", meta: "Yesterday · Magsaysay Ave" },
+];
 
 interface NavLink {
   key: ScreenName;
@@ -27,10 +33,37 @@ export function TopNav({
   userName: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [unread, setUnread] = useState(3);
+  const notifRef = useRef<HTMLDivElement>(null);
 
   const go = (s: ScreenName) => {
     setOpen(false);
+    setNotifOpen(false);
     onNavigate(s);
+  };
+
+  // Close the notifications menu on outside click / Escape.
+  useEffect(() => {
+    if (!notifOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) setNotifOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setNotifOpen(false);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [notifOpen]);
+
+  const toggleNotif = () => {
+    setNotifOpen((v) => {
+      const next = !v;
+      if (next) setUnread(0); // opening marks as read
+      return next;
+    });
   };
 
   // Which top-level tab is highlighted (sub-screens map back to a parent).
@@ -64,10 +97,28 @@ export function TopNav({
         </nav>
 
         <div className="topnav__actions">
-          <button className="iconbtn" aria-label="Notifications">
-            <Bell size={20} strokeWidth={2} />
-            <span className="iconbtn__dot">3</span>
-          </button>
+          <div className="notif" ref={notifRef}>
+            <button
+              className="iconbtn"
+              aria-label="Notifications"
+              aria-expanded={notifOpen}
+              onClick={toggleNotif}
+            >
+              <Bell size={20} strokeWidth={2} />
+              {unread > 0 && <span className="iconbtn__dot">{unread}</span>}
+            </button>
+            {notifOpen && (
+              <div className="notif__pop card" role="dialog" aria-label="Notifications">
+                <div className="notif__head">Notifications</div>
+                {NOTIFICATIONS.map((n) => (
+                  <div className="notif__item" key={n.title}>
+                    <span className="notif__title">{n.title}</span>
+                    <span className="notif__meta">{n.meta}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           <button className="btn-primary topnav__post" onClick={() => go("create-event")}>
             <Plus size={18} strokeWidth={2.6} />

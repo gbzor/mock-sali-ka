@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, ChevronRight, LogOut } from "lucide-react";
 import { initialsOf, type Session } from "../useAuth";
+import { useToast } from "../components/Toast";
 import type { ScreenName } from "../types";
 
 type ToggleKey = "push" | "email" | "dark";
@@ -15,6 +16,8 @@ export function SettingsScreen({
   session: Session;
 }) {
   const displayEmail = session.email || "guest@salika.app";
+  const notify = useToast();
+  const demo = () => notify("This is a demo — changes aren't saved");
   const [toggles, setToggles] = useState<Record<ToggleKey, boolean>>({
     push: true,
     email: false,
@@ -40,8 +43,8 @@ export function SettingsScreen({
       </div>
 
       <SettingsGroup title="Account">
-        <Row label="Edit Profile" hint="Personal details, bio, and links" chevron />
-        <Row label="Change Password" hint="Last updated 3 months ago" chevron />
+        <Row label="Edit Profile" hint="Personal details, bio, and links" chevron onClick={demo} />
+        <Row label="Change Password" hint="Last updated 3 months ago" chevron onClick={demo} />
       </SettingsGroup>
 
       <SettingsGroup title="Notifications">
@@ -60,7 +63,7 @@ export function SettingsScreen({
       </SettingsGroup>
 
       <SettingsGroup title="Preferences">
-        <Row label="Language" value="English" chevron />
+        <Row label="Language" value="English" chevron onClick={demo} />
         <Row
           label="Dark Mode"
           hint="Turn off bright lights"
@@ -70,9 +73,9 @@ export function SettingsScreen({
       </SettingsGroup>
 
       <SettingsGroup title="Support">
-        <Row label="Help Center" chevron />
-        <Row label="Report a Problem" chevron />
-        <Row label="Terms & Privacy" chevron />
+        <Row label="Help Center" chevron onClick={demo} />
+        <Row label="Report a Problem" chevron onClick={demo} />
+        <Row label="Terms & Privacy" chevron onClick={demo} />
       </SettingsGroup>
 
       <button className="logout-btn" onClick={onLogout}>
@@ -99,6 +102,7 @@ function Row({
   chevron,
   toggle,
   onToggle,
+  onClick,
 }: {
   label: string;
   hint?: string;
@@ -106,11 +110,15 @@ function Row({
   chevron?: boolean;
   toggle?: boolean;
   onToggle?: () => void;
+  onClick?: () => void;
 }) {
   const interactive = onToggle === undefined;
   const Tag = interactive ? "button" : "div";
   return (
-    <Tag className="setting-row" {...(interactive ? { type: "button" } : {})}>
+    <Tag
+      className="setting-row"
+      {...(interactive ? { type: "button" as const, onClick } : {})}
+    >
       <span className="setting-row__label">
         <strong>{label}</strong>
         {hint && <span className="muted">{hint}</span>}

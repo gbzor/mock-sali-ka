@@ -14,6 +14,7 @@ import { AttendanceScreen } from "./screens/AttendanceScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { FEED_EVENTS } from "./data/events";
 import { useAuth } from "./useAuth";
+import { ToastProvider } from "./components/Toast";
 import type { EventItem, ScreenName } from "./types";
 
 export default function App() {
@@ -46,6 +47,7 @@ export default function App() {
   }
 
   return (
+    <ToastProvider>
     <div className="app">
       <TopNav active={screen} onNavigate={navigate} userName={session.name} />
       <main>
@@ -54,7 +56,9 @@ export default function App() {
           <HostedEventsScreen onOpenEvent={openEvent} onBack={() => navigate("home")} />
         )}
         {screen === "calendar" && <CalendarScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} />}
-        {screen === "map" && <MapScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} />}
+        {screen === "map" && (
+          <MapScreen onOpenEvent={() => openEvent(FEED_EVENTS[0])} onNavigate={navigate} />
+        )}
         {screen === "create-event" && <CreateEventScreen onNavigate={navigate} />}
         {screen === "profile" && (
           <ProfileScreen onNavigate={navigate} onOpenEvent={() => openEvent(FEED_EVENTS[1])} />
@@ -81,5 +85,6 @@ export default function App() {
         <span className="muted">Front-end demo · sample data only</span>
       </footer>
     </div>
+    </ToastProvider>
   );
 }
