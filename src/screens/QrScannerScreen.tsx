@@ -26,7 +26,7 @@ export function QrScannerScreen({ onNavigate }: { onNavigate: (s: ScreenName) =>
 
   return (
     <div className="page page--narrow">
-      <button className="back-link" onClick={() => onNavigate("profile")}>
+      <button className="back-link" onClick={() => onNavigate("event-detail")}>
         <ArrowLeft size={18} strokeWidth={2.2} /> Back
       </button>
       <h1 className="page-title">Check-In Scanner</h1>

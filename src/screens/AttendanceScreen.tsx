@@ -21,7 +21,7 @@ export function AttendanceScreen({ onNavigate }: { onNavigate: (s: ScreenName) =
 
   return (
     <div className="page page--narrow">
-      <button className="back-link" onClick={() => onNavigate("qr-scanner")}>
+      <button className="back-link" onClick={() => onNavigate("event-detail")}>
         <ArrowLeft size={18} strokeWidth={2.2} /> Back
       </button>
       <h1 className="page-title">Attendance</h1>
