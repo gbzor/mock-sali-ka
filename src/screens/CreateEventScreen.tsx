@@ -1,13 +1,15 @@
 import { useState, type FormEvent } from "react";
-import { Plus, Clock, MapPin, Check, ImagePlus } from "lucide-react";
+import { Plus, MapPin, Check, ImagePlus } from "lucide-react";
 import { CATEGORIES } from "../data/events";
 import { DatePicker } from "../components/DatePicker";
+import { TimePicker, type TimeValue } from "../components/TimePicker";
 import { StripePlaceholder } from "../components/StripePlaceholder";
 import type { Category, ScreenName } from "../types";
 
 export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) => void }) {
   const [category, setCategory] = useState<Category>("Market");
   const [date, setDate] = useState<Date | null>(null);
+  const [time, setTime] = useState<TimeValue | null>(null);
   const [cover, setCover] = useState(false);
   const [promote, setPromote] = useState(true);
   const [posted, setPosted] = useState(false);
@@ -48,10 +50,7 @@ export function CreateEventScreen({ onNavigate }: { onNavigate: (s: ScreenName) 
             <DatePicker value={date} onChange={setDate} placeholder="Pick a date" />
           </Field>
           <Field label="Time">
-            <div className="input input--icon">
-              <Clock size={18} strokeWidth={2} className="muted" />
-              <input placeholder="10:00 AM" required />
-            </div>
+            <TimePicker value={time} onChange={setTime} placeholder="Pick a time" />
           </Field>
         </div>
 

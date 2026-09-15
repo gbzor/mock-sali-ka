@@ -930,6 +930,85 @@
   box-shadow: inset 0 0 0 1.5px var(--green);
 }
 
+/* Time picker */
+.timepicker {
+  position: relative;
+}
+.timepicker__trigger {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.timepicker__trigger span {
+  flex: 1;
+  font-weight: 600;
+}
+.timepicker__caret {
+  flex: none;
+}
+.timepicker__pop {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  padding: 14px;
+  box-shadow: var(--shadow-float);
+  animation: page-in 0.16s ease both;
+}
+.time-cols {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+.time-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.time-col--period {
+  flex: 0 0 62px;
+}
+.time-col__label {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.time-col__scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 168px;
+  overflow-y: auto;
+  padding: 2px;
+  scrollbar-width: thin;
+}
+.time-col__scroll--period {
+  max-height: none;
+  justify-content: flex-start;
+}
+.time-opt {
+  padding: 9px 0;
+  border-radius: var(--r-sm);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  text-align: center;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.time-opt:hover {
+  background: var(--surface-alt);
+}
+.time-opt--active {
+  background: var(--green);
+  color: #fff;
+}
+
 /* ---------------------------------------------------------------------------
    Profile
    --------------------------------------------------------------------------- */
