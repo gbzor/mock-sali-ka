@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Settings, QrCode, ScanLine, ClipboardList } from "lucide-react";
+import { Settings, QrCode, ScanLine, ClipboardList, Star } from "lucide-react";
 import { ScheduleItem } from "../components/ScheduleItem";
-import { GOING_LIST, USER } from "../data/events";
+import { GOING_LIST, HOST_STATS, HOSTED_RATINGS, USER } from "../data/events";
 import type { ScreenName } from "../types";
 
 export function ProfileScreen({
@@ -11,7 +11,7 @@ export function ProfileScreen({
   onNavigate: (s: ScreenName) => void;
   onOpenEvent: () => void;
 }) {
-  const [tab, setTab] = useState<"attendee" | "organizer">("attendee");
+  const [tab, setTab] = useState<"attendee" | "organizer">("organizer");
 
   return (
     <div className="page">
@@ -27,6 +27,24 @@ export function ProfileScreen({
           <span className="identity-card__avatar">{USER.initials}</span>
           <h2 className="identity-card__name">{USER.name}</h2>
           <p className="muted">{USER.memberSince}</p>
+
+          {/* Followers + reputation */}
+          <div className="host-stats">
+            <div className="host-stat">
+              <strong>{HOST_STATS.hosted}</strong>
+              <span>Events</span>
+            </div>
+            <div className="host-stat">
+              <strong>{HOST_STATS.followers}</strong>
+              <span>Followers</span>
+            </div>
+            <div className="host-stat">
+              <strong className="host-stat__rating">
+                <Star size={15} strokeWidth={2} fill="currentColor" /> {HOST_STATS.rating.toFixed(1)}
+              </strong>
+              <span>Rating</span>
+            </div>
+          </div>
 
           <div className="organizer-tools">
             <button className="tool-btn" onClick={() => onNavigate("qr-scanner")}>
@@ -52,35 +70,70 @@ export function ProfileScreen({
 
       <div className="segmented">
         <button
-          className={`segmented__tab ${tab === "attendee" ? "segmented__tab--active" : ""}`}
-          onClick={() => setTab("attendee")}
-        >
-          Attendee
-        </button>
-        <button
           className={`segmented__tab ${tab === "organizer" ? "segmented__tab--active" : ""}`}
           onClick={() => setTab("organizer")}
         >
           Organizer
         </button>
+        <button
+          className={`segmented__tab ${tab === "attendee" ? "segmented__tab--active" : ""}`}
+          onClick={() => setTab("attendee")}
+        >
+          Attendee
+        </button>
       </div>
 
-      <section className="block">
-        <h2 className="section-title block__title">
-          {tab === "attendee" ? "Events you're going to" : "Events you're hosting"}
-        </h2>
-        <div className="stack">
-          {(tab === "attendee" ? GOING_LIST : GOING_LIST.slice(0, 1)).map((it) => (
-            <ScheduleItem
-              key={it.title}
-              title={it.title}
-              time={it.meta}
-              location={it.location}
-              onClick={onOpenEvent}
-            />
-          ))}
-        </div>
-      </section>
+      {tab === "organizer" ? (
+        <section className="block">
+          <div className="ratings-head">
+            <h2 className="section-title">Ratings on your events</h2>
+            <span className="ratings-avg">
+              <Star size={16} strokeWidth={2} fill="currentColor" />
+              {HOST_STATS.rating.toFixed(1)} avg · {HOST_STATS.reviews} reviews
+            </span>
+          </div>
+          <div className="stack">
+            {HOSTED_RATINGS.map((e) => (
+              <button className="rating-row card" key={e.title} onClick={onOpenEvent}>
+                <span className="rating-row__info">
+                  <strong>{e.title}</strong>
+                  <span className="muted">{e.date}</span>
+                </span>
+                <span className="rating-row__score">
+                  <span className="stars">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <Star
+                        key={n}
+                        size={15}
+                        strokeWidth={2}
+                        fill={Math.round(e.rating) >= n ? "currentColor" : "none"}
+                      />
+                    ))}
+                  </span>
+                  <span className="rating-row__val">
+                    {e.rating.toFixed(1)} <span className="muted">({e.reviews})</span>
+                  </span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section className="block">
+          <h2 className="section-title block__title">Events you're going to</h2>
+          <div className="stack">
+            {GOING_LIST.map((it) => (
+              <ScheduleItem
+                key={it.title}
+                title={it.title}
+                time={it.meta}
+                location={it.location}
+                onClick={onOpenEvent}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

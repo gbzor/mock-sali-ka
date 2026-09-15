@@ -1951,6 +1951,70 @@ button.setting-row:hover {
   margin: -8px 0 12px;
 }
 
+/* Profile reputation + event ratings */
+.host-stat__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #e0a417;
+}
+.ratings-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.ratings-avg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+.ratings-avg svg {
+  color: #e0a417;
+}
+.rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  transition: transform 0.16s ease, border-color 0.16s ease;
+}
+.rating-row:hover {
+  transform: translateX(2px);
+  border-color: var(--green);
+}
+.rating-row__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.rating-row__info strong {
+  font-size: 15px;
+}
+.rating-row__info .muted {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.rating-row__score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex: none;
+}
+.rating-row__val {
+  font-size: 13px;
+  font-weight: 800;
+}
+
 /* ---------------------------------------------------------------------------
    Responsive
    --------------------------------------------------------------------------- */

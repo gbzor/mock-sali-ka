@@ -114,3 +114,18 @@ export const USER = {
   initials: "AS",
   membershipId: "CMN-40217",
 };
+
+/** Public reputation stats for the current user (and host profile). */
+export const HOST_STATS = {
+  hosted: 24,
+  followers: 312,
+  rating: 4.8,
+  reviews: 57,
+};
+
+/** Ratings the current user has earned on the events they hosted. */
+export const HOSTED_RATINGS = [
+  { title: "Naga Sunday Market", date: "Aug 23, 2026", rating: 4.9, reviews: 21 },
+  { title: "Kinalas Food Crawl", date: "Jun 28, 2026", rating: 4.8, reviews: 34 },
+  { title: "Barangay Fun Run", date: "May 12, 2026", rating: 4.7, reviews: 15 },
+];
