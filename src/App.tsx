@@ -61,7 +61,7 @@ export default function App() {
         )}
         {screen === "create-event" && <CreateEventScreen onNavigate={navigate} />}
         {screen === "profile" && (
-          <ProfileScreen onNavigate={navigate} onOpenEvent={() => openEvent(FEED_EVENTS[1])} />
+          <ProfileScreen onNavigate={navigate} onOpenEvent={openEvent} />
         )}
         {screen === "event-detail" && (
           <EventDetailScreen

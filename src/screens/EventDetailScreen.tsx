@@ -120,7 +120,7 @@ export function EventDetailScreen({
                 <ScanLine size={18} strokeWidth={2.2} /> Check-in Scanner
               </button>
               <button className="tool-btn" onClick={() => onNavigate("attendance")}>
-                <ClipboardList size={18} strokeWidth={2.2} /> Attendance
+                <ClipboardList size={18} strokeWidth={2.2} /> Attendance List
               </button>
             </div>
           </div>

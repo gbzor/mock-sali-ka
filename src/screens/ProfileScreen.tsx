@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { Settings, QrCode, Star } from "lucide-react";
 import { ScheduleItem } from "../components/ScheduleItem";
-import { GOING_LIST, HOST_STATS, HOSTED_RATINGS, USER } from "../data/events";
-import type { ScreenName } from "../types";
+import { FEED_EVENTS, GOING_LIST, HOST_STATS, HOSTED_RATINGS, USER } from "../data/events";
+import type { EventItem, ScreenName } from "../types";
 
 export function ProfileScreen({
   onNavigate,
   onOpenEvent,
 }: {
   onNavigate: (s: ScreenName) => void;
-  onOpenEvent: () => void;
+  onOpenEvent: (e: EventItem) => void;
 }) {
   const [tab, setTab] = useState<"attendee" | "organizer">("organizer");
+
+  const hostedEvent = FEED_EVENTS.find((e) => e.hosting) ?? FEED_EVENTS[0];
+  const attendingEvent = FEED_EVENTS.find((e) => e.attending) ?? FEED_EVENTS[0];
+  // Match a going-list entry to the real event so its detail opens correctly.
+  const openGoing = (title: string) =>
+    onOpenEvent(FEED_EVENTS.find((e) => e.title === title && e.attending) ?? attendingEvent);
 
   return (
     <div className="page">
@@ -85,7 +91,7 @@ export function ProfileScreen({
           </div>
           <div className="stack">
             {HOSTED_RATINGS.map((e) => (
-              <button className="rating-row card" key={e.title} onClick={onOpenEvent}>
+              <button className="rating-row card" key={e.title} onClick={() => onOpenEvent(hostedEvent)}>
                 <span className="rating-row__info">
                   <strong>{e.title}</strong>
                   <span className="muted">{e.date}</span>
@@ -119,7 +125,7 @@ export function ProfileScreen({
                 title={it.title}
                 time={it.meta}
                 location={it.location}
-                onClick={onOpenEvent}
+                onClick={() => openGoing(it.title)}
               />
             ))}
           </div>
