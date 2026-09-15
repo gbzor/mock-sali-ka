@@ -28,6 +28,7 @@ export function HomeScreen({ onOpenEvent }: { onOpenEvent: (e: EventItem) => voi
   );
 
   const feed = FEED_EVENTS.filter((e) => {
+    if (e.hosting) return false; // your own hosted events don't show in the feed
     const q = query.trim().toLowerCase();
     const byCat = active === "All" || e.category === active;
     const byQuery =
