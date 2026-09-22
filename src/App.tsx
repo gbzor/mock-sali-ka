@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TopNav } from "./components/TopNav";
 import { AuthScreen } from "./screens/AuthScreen";
 import { HomeScreen } from "./screens/HomeScreen";
@@ -21,6 +21,23 @@ export default function App() {
   const { session, login, logout } = useAuth();
   const [screen, setScreen] = useState<ScreenName>("home");
   const [activeEvent, setActiveEvent] = useState<EventItem>(FEED_EVENTS[0]);
+  const [dark, setDark] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem("salika.theme") === "dark";
+    } catch {
+      return false;
+    }
+  });
+
+  // Apply the theme to the document root and remember it for the tab.
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    try {
+      sessionStorage.setItem("salika.theme", dark ? "dark" : "light");
+    } catch {
+      /* storage unavailable — theme stays in memory only */
+    }
+  }, [dark]);
 
   const navigate = useCallback((next: ScreenName) => {
     setScreen(next);
@@ -77,7 +94,13 @@ export default function App() {
         {screen === "qr-scanner" && <QrScannerScreen onNavigate={navigate} />}
         {screen === "attendance" && <AttendanceScreen onNavigate={navigate} />}
         {screen === "settings" && (
-          <SettingsScreen onNavigate={navigate} onLogout={handleLogout} session={session} />
+          <SettingsScreen
+            onNavigate={navigate}
+            onLogout={handleLogout}
+            session={session}
+            dark={dark}
+            onToggleDark={() => setDark((v) => !v)}
+          />
         )}
       </main>
 

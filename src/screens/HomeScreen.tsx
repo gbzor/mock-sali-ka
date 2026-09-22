@@ -1,29 +1,26 @@
 import { useMemo, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { EventCard } from "../components/EventCard";
+import { DatePicker } from "../components/DatePicker";
 import { CATEGORIES, FEED_EVENTS } from "../data/events";
 import type { Category, EventItem } from "../types";
 
-const cap = (s: string) => s.charAt(0) + s.slice(1).toLowerCase();
+// Month label (e.g. "AUG") -> 0-indexed month, for matching a picked date.
+const MONTH_IDX: Record<string, number> = {
+  JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5,
+  JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11,
+};
 
 export function HomeScreen({ onOpenEvent }: { onOpenEvent: (e: EventItem) => void }) {
   const [active, setActive] = useState<Category | "All">("All");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("All");
-  const [dateKey, setDateKey] = useState("All");
+  const [filterDate, setFilterDate] = useState<Date | null>(null);
   const [filterOpen, setFilterOpen] = useState(false);
 
   // Distinct filter options derived from the sample data.
   const locations = useMemo(
     () => Array.from(new Set(FEED_EVENTS.map((e) => e.location))),
-    []
-  );
-  const dates = useMemo(
-    () =>
-      Array.from(new Set(FEED_EVENTS.map((e) => `${e.monthLabel}-${e.day}`))).map((key) => {
-        const [m, d] = key.split("-");
-        return { key, label: `${cap(m)} ${d}` };
-      }),
     []
   );
 
@@ -34,17 +31,19 @@ export function HomeScreen({ onOpenEvent }: { onOpenEvent: (e: EventItem) => voi
     const byQuery =
       q === "" || e.title.toLowerCase().includes(q) || e.location.toLowerCase().includes(q);
     const byLoc = location === "All" || e.location === location;
-    const byDate = dateKey === "All" || `${e.monthLabel}-${e.day}` === dateKey;
+    const byDate =
+      !filterDate ||
+      (Number(e.day) === filterDate.getDate() && MONTH_IDX[e.monthLabel] === filterDate.getMonth());
     return byCat && byQuery && byLoc && byDate;
   });
 
   const activeCount =
-    (active !== "All" ? 1 : 0) + (location !== "All" ? 1 : 0) + (dateKey !== "All" ? 1 : 0);
+    (active !== "All" ? 1 : 0) + (location !== "All" ? 1 : 0) + (filterDate ? 1 : 0);
 
   const clearAll = () => {
     setActive("All");
     setLocation("All");
-    setDateKey("All");
+    setFilterDate(null);
   };
 
   return (
@@ -107,18 +106,7 @@ export function HomeScreen({ onOpenEvent }: { onOpenEvent: (e: EventItem) => voi
 
             <label className="filter-field">
               <span>Date</span>
-              <select
-                className="input"
-                value={dateKey}
-                onChange={(e) => setDateKey(e.target.value)}
-              >
-                <option value="All">Any date</option>
-                {dates.map((d) => (
-                  <option key={d.key} value={d.key}>
-                    {d.label}
-                  </option>
-                ))}
-              </select>
+              <DatePicker value={filterDate} onChange={setFilterDate} placeholder="Any date" />
             </label>
           </div>
 

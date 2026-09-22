@@ -1,4 +1,11 @@
-export type Category = "Market" | "Music" | "Sports" | "Volunteer";
+export type Category =
+  | "Market"
+  | "Music"
+  | "Sports"
+  | "Volunteer"
+  | "Fun Run"
+  | "Concert"
+  | "Pop-Up";
 
 export type ScreenName =
   | "home"

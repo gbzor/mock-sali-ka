@@ -1,6 +1,14 @@
 import type { Category, EventItem } from "../types";
 
-export const CATEGORIES: Category[] = ["Market", "Music", "Sports", "Volunteer"];
+export const CATEGORIES: Category[] = [
+  "Market",
+  "Music",
+  "Sports",
+  "Volunteer",
+  "Fun Run",
+  "Concert",
+  "Pop-Up",
+];
 
 /** Feed shown on the Home screen ("Events Around You"). */
 export const FEED_EVENTS: EventItem[] = [
@@ -46,6 +54,36 @@ export const FEED_EVENTS: EventItem[] = [
     dateLine: "Wed, Sep 02 · 5:00 PM",
     location: "Metro Naga Sports Complex",
     going: 19,
+  },
+  {
+    id: "naga-fun-run",
+    title: "Naga City Fun Run 2026",
+    category: "Fun Run",
+    monthLabel: "SEP",
+    day: "27",
+    dateLine: "Sun, Sep 27 · 5:00 AM",
+    location: "Plaza Rizal, Naga City",
+    going: 230,
+  },
+  {
+    id: "penafrancia-concert",
+    title: "Peñafrancia Grand Concert",
+    category: "Concert",
+    monthLabel: "SEP",
+    day: "19",
+    dateLine: "Sat, Sep 19 · 7:00 PM",
+    location: "Plaza Quezon, Naga City",
+    going: 540,
+  },
+  {
+    id: "centro-popup",
+    title: "Centro Pop-Up Bazaar",
+    category: "Pop-Up",
+    monthLabel: "SEP",
+    day: "12",
+    dateLine: "Sat, Sep 12 · 3:00 PM",
+    location: "Magsaysay Ave, Naga City",
+    going: 96,
   },
 ];
 

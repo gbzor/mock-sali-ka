@@ -195,6 +195,10 @@ a {
 .badge--music { color: var(--purple); background: var(--purple-soft); }
 .badge--sports { color: var(--blue); background: var(--blue-soft); }
 .badge--volunteer { color: var(--green-dark); background: var(--green-soft); }
+/* Newer categories use translucent tints so they read in light and dark. */
+.badge--funrun { color: #e0536a; background: rgba(224, 83, 106, 0.15); }
+.badge--concert { color: #cf5bbf; background: rgba(207, 91, 191, 0.15); }
+.badge--popup { color: #16b8a6; background: rgba(22, 184, 166, 0.16); }
 
 .empty {
   color: var(--text-muted);
@@ -207,4 +211,80 @@ a {
   outline: 2px solid var(--green);
   outline-offset: 2px;
   border-radius: 8px;
+}
+
+/* =============================================================================
+   Dark theme — overrides for spots that use fixed (light) colors.
+   Token-driven surfaces update automatically via tokens.css.
+   ============================================================================= */
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(1400px 700px at 15% -10%, #16211a 0%, transparent 55%),
+    radial-gradient(1200px 700px at 100% 0%, #241d16 0%, transparent 50%),
+    var(--bg);
+}
+[data-theme="dark"] .btn-primary:hover {
+  background: #4aa152;
+}
+[data-theme="dark"] .topnav {
+  background: rgba(20, 19, 14, 0.72);
+}
+[data-theme="dark"] .navlink:hover,
+[data-theme="dark"] .iconbtn:hover,
+[data-theme="dark"] .topnav__burger:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+[data-theme="dark"] .eventcard__date,
+[data-theme="dark"] .map-search,
+[data-theme="dark"] .round-btn,
+[data-theme="dark"] .upload-preview__badge {
+  background: rgba(31, 29, 22, 0.94);
+  color: var(--text);
+}
+[data-theme="dark"] .stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.05) 0,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+[data-theme="dark"] .pill--active,
+[data-theme="dark"] .eventcard__hosting {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+[data-theme="dark"] .toast {
+  background: #2b2820;
+  color: var(--text);
+}
+[data-theme="dark"] .detail-about {
+  color: #c9c3b6;
+}
+[data-theme="dark"] .map-canvas {
+  background: #191811;
+}
+[data-theme="dark"] .map-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+[data-theme="dark"] .promote,
+[data-theme="dark"] .detail-hosting,
+[data-theme="dark"] .stat-card--green {
+  border-color: #2c4029;
+}
+[data-theme="dark"] .follow-btn--on:hover,
+[data-theme="dark"] .directions:hover {
+  background: #26361f;
+}
+[data-theme="dark"] .logout-btn {
+  background: #2a1a17;
+  border-color: #4a2b27;
+  color: #f0837a;
+}
+[data-theme="dark"] .logout-btn:hover {
+  background: #331e1a;
 }

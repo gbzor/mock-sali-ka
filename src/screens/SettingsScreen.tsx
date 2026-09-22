@@ -4,16 +4,20 @@ import { initialsOf, type Session } from "../useAuth";
 import { useToast } from "../components/Toast";
 import type { ScreenName } from "../types";
 
-type ToggleKey = "push" | "email" | "dark";
+type ToggleKey = "push" | "email";
 
 export function SettingsScreen({
   onNavigate,
   onLogout,
   session,
+  dark,
+  onToggleDark,
 }: {
   onNavigate: (s: ScreenName) => void;
   onLogout: () => void;
   session: Session;
+  dark: boolean;
+  onToggleDark: () => void;
 }) {
   const displayEmail = session.email || "guest@salika.app";
   const notify = useToast();
@@ -21,7 +25,6 @@ export function SettingsScreen({
   const [toggles, setToggles] = useState<Record<ToggleKey, boolean>>({
     push: true,
     email: false,
-    dark: false,
   });
 
   const flip = (k: ToggleKey) => setToggles((t) => ({ ...t, [k]: !t[k] }));
@@ -66,9 +69,9 @@ export function SettingsScreen({
         <Row label="Language" value="English" chevron onClick={demo} />
         <Row
           label="Dark Mode"
-          hint="Turn off bright lights"
-          toggle={toggles.dark}
-          onToggle={() => flip("dark")}
+          hint="Easier on the eyes at night"
+          toggle={dark}
+          onToggle={onToggleDark}
         />
       </SettingsGroup>
 

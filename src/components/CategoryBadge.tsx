@@ -5,6 +5,9 @@ const CLASS: Record<Category, string> = {
   Music: "badge--music",
   Sports: "badge--sports",
   Volunteer: "badge--volunteer",
+  "Fun Run": "badge--funrun",
+  Concert: "badge--concert",
+  "Pop-Up": "badge--popup",
 };
 
 export function CategoryBadge({ category }: { category: Category }) {
