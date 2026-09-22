@@ -65,9 +65,11 @@
   --border: #322e24;
   --border-strong: #423d33;
 
-  --green: #57b45f;
-  --green-dark: #8ccf90;
-  --green-soft: #21301f;
+  /* Primary fill (buttons, FAB, chips); -dark is the readable text/accent on
+     dark surfaces; -soft is the tinted background behind green text. */
+  --green: #43a047;
+  --green-dark: #7cc47f;
+  --green-soft: #1f2f1d;
 
   --orange: #e8a06a;
   --orange-soft: #33261a;
