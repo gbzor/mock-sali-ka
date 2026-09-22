@@ -68,6 +68,66 @@ export const SCHEDULE = [
   },
 ];
 
+export type EventStatus = "Ongoing" | "Upcoming" | "Finished";
+
+export interface CalendarEvent {
+  title: string;
+  time: string;
+  location: string;
+  category: Category;
+  status: EventStatus;
+}
+
+/**
+ * Events keyed by date ("YEAR-MONTHINDEX-DAY", month is 0-indexed).
+ * Clicking a day in the calendar shows that day's events.
+ */
+export const CALENDAR_EVENTS: Record<string, CalendarEvent[]> = {
+  "2026-7-23": [
+    {
+      title: "Naga Sunday Market",
+      time: "10:00 AM - 2:00 PM",
+      location: "Plaza Rizal, Naga City",
+      category: "Market",
+      status: "Ongoing",
+    },
+    {
+      title: "Sunset Yoga at the Plaza",
+      time: "5:30 PM - 6:30 PM",
+      location: "Plaza Quezon, Naga City",
+      category: "Sports",
+      status: "Upcoming",
+    },
+  ],
+  "2026-7-25": [
+    {
+      title: "Acoustic Nights at the Avenue",
+      time: "6:30 PM - 9:00 PM",
+      location: "Avenue Square, Magsaysay Ave",
+      category: "Music",
+      status: "Upcoming",
+    },
+  ],
+  "2026-7-29": [
+    {
+      title: "Naga River Clean-up Drive",
+      time: "8:00 AM - 11:00 AM",
+      location: "Naga River Esplanade",
+      category: "Volunteer",
+      status: "Finished",
+    },
+  ],
+  "2026-8-2": [
+    {
+      title: "Weekend Frisbee Friendly",
+      time: "5:00 PM - 7:00 PM",
+      location: "Metro Naga Sports Complex",
+      category: "Sports",
+      status: "Upcoming",
+    },
+  ],
+};
+
 /** Events the current user is attending (Profile screen). */
 export const GOING_LIST = [
   {

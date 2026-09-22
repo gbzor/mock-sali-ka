@@ -1,25 +1,30 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ScheduleItem } from "../components/ScheduleItem";
-import { SCHEDULE } from "../data/events";
+import { ChevronLeft, ChevronRight, ChevronRight as Arrow } from "lucide-react";
+import { CategoryBadge } from "../components/CategoryBadge";
+import { CALENDAR_EVENTS, type EventStatus } from "../data/events";
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
 ];
-// Sample events live on Aug 23 & 29, 2026.
-const EVENT_YEAR = 2026;
-const EVENT_MONTH = 7; // August (0-indexed)
-const EVENT_DAYS = new Set([23, 29]);
+
+const STATUS_CLASS: Record<EventStatus, string> = {
+  Ongoing: "status--ongoing",
+  Upcoming: "status--upcoming",
+  Finished: "status--finished",
+};
 
 export function CalendarScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
-  const [view, setView] = useState({ year: EVENT_YEAR, month: EVENT_MONTH });
+  // Default to a month/day that has events so the list isn't empty on first load.
+  const [view, setView] = useState({ year: 2026, month: 7 }); // August 2026
   const [selected, setSelected] = useState<number | null>(23);
 
   const firstOffset = new Date(view.year, view.month, 1).getDay();
   const daysInMonth = new Date(view.year, view.month + 1, 0).getDate();
-  const isEventMonth = view.year === EVENT_YEAR && view.month === EVENT_MONTH;
+
+  const keyFor = (day: number) => `${view.year}-${view.month}-${day}`;
+  const hasEvents = (day: number) => Boolean(CALENDAR_EVENTS[keyFor(day)]);
 
   const cells: (number | null)[] = [
     ...Array.from({ length: firstOffset }, () => null),
@@ -32,10 +37,21 @@ export function CalendarScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
     setSelected(null);
   };
 
+  const dayEvents = selected != null ? CALENDAR_EVENTS[keyFor(selected)] ?? [] : [];
+  const selectedLabel =
+    selected != null
+      ? new Date(view.year, view.month, selected).toLocaleDateString("en-US", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        })
+      : null;
+
   return (
     <div className="page">
       <h1 className="page-title">Schedule</h1>
-      <p className="page-sub">Your calendar and everything you have lined up.</p>
+      <p className="page-sub">Pick a date to see the events happening that day.</p>
 
       <div className="cal-layout">
         <div className="cal-card card">
@@ -72,7 +88,7 @@ export function CalendarScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
                   onClick={() => setSelected(day)}
                 >
                   {day}
-                  {isEventMonth && EVENT_DAYS.has(day) && <span className="cal-cell__dot" />}
+                  {hasEvents(day) && <span className="cal-cell__dot" />}
                 </button>
               )
             )}
@@ -80,31 +96,35 @@ export function CalendarScreen({ onOpenEvent }: { onOpenEvent: () => void }) {
         </div>
 
         <div className="cal-side">
-          {isEventMonth ? (
-            SCHEDULE.map((group) => (
-              <section className="cal-day-group" key={group.date}>
-                <h2 className="section-title cal-day-group__title">{group.date}</h2>
-                <div className="stack">
-                  {group.items.map((it) => (
-                    <ScheduleItem
-                      key={it.title}
-                      title={it.title}
-                      time={it.time}
-                      location={it.location}
-                      onClick={onOpenEvent}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))
-          ) : (
-            <section className="cal-day-group">
-              <h2 className="section-title cal-day-group__title">
-                {MONTHS[view.month]} {view.year}
-              </h2>
-              <p className="empty">No events scheduled this month.</p>
-            </section>
-          )}
+          <section className="cal-day-group">
+            <h2 className="section-title cal-day-group__title">
+              {selectedLabel ?? "Select a date"}
+            </h2>
+
+            {selected == null ? (
+              <p className="empty">Tap a day on the calendar to see its events.</p>
+            ) : dayEvents.length === 0 ? (
+              <p className="empty">No events on this day.</p>
+            ) : (
+              <div className="stack">
+                {dayEvents.map((e) => (
+                  <button className="cal-event card" key={e.title} onClick={onOpenEvent}>
+                    <span className="cal-event__main">
+                      <span className="cal-event__top">
+                        <CategoryBadge category={e.category} />
+                        <span className={`status-tag ${STATUS_CLASS[e.status]}`}>{e.status}</span>
+                      </span>
+                      <strong className="cal-event__title">{e.title}</strong>
+                      <span className="cal-event__meta">
+                        {e.time} · {e.location}
+                      </span>
+                    </span>
+                    <Arrow size={20} strokeWidth={2} className="muted cal-event__chevron" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
         </div>
       </div>
     </div>
