@@ -1,4 +1,7 @@
 import { useCallback, useState } from "react";
+import type { DemoKycRecord, DemoKycStatus } from "./kyc";
+import { normalizeDiscoveryProfile, type DiscoveryProfile } from "./discovery";
+import { CATEGORIES } from "./data/events";
 
 /**
  * Lightweight, front-end-only session for the demo.
@@ -15,13 +18,19 @@ import { useCallback, useState } from "react";
 
 const SESSION_KEY = "salika.session";
 
+/** Which UI the user sees: attendees browse/join events, hosts get the dashboard. */
+export type Role = "attendee" | "host";
+
 export interface Session {
   name: string;
   email: string;
-  guest?: boolean;
-  accountType?: "personal" | "business";
+  /** Defaults to "attendee" when missing (e.g. sessions saved before roles existed). */
+  role?: Role;
   businessName?: string;
   businessContact?: string;
+  /** Per-role prototype status only; never identity data or a real verified flag. */
+  demoKyc?: DemoKycRecord;
+  discoveryProfile?: DiscoveryProfile;
 }
 
 function loadSession(): Session | null {
@@ -65,5 +74,38 @@ export function useAuth() {
     persist(null);
   }, [persist]);
 
-  return { session, login, logout };
+  /** Switch between the attendee and host UI (Settings → "Sali ka as a host!" / "Sali na!"). */
+  const setRole = useCallback(
+    (role: Role) => {
+      setSession((s) => {
+        if (!s) return s;
+        const next = { ...s, role };
+        persist(next);
+        return next;
+      });
+    },
+    [persist]
+  );
+
+  const setDemoKycStatus = useCallback((role: Role, status: DemoKycStatus) => {
+    setSession((current) => {
+      if (!current) return current;
+      const next = { ...current, demoKyc: { ...current.demoKyc, [role]: status } };
+      persist(next);
+      return next;
+    });
+  }, [persist]);
+
+  const setDiscoveryProfile = useCallback((profile: DiscoveryProfile) => {
+    const normalized = normalizeDiscoveryProfile(profile, CATEGORIES);
+    if (!normalized) return;
+    setSession((current) => {
+      if (!current) return current;
+      const next = { ...current, discoveryProfile: normalized };
+      persist(next);
+      return next;
+    });
+  }, [persist]);
+
+  return { session, login, logout, setRole, setDemoKycStatus, setDiscoveryProfile };
 }

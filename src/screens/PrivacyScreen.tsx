@@ -35,12 +35,18 @@ const SECTIONS: LegalSection[] = [
             encrypted, hashed form), and account type.
           </li>
           <li>
-            <strong>Business account details:</strong> business name and business contact
-            information, if you open a Business account.
+            <strong>Host account details:</strong> business name and business contact
+            information, if you open a Host account.
           </li>
           <li>
             <strong>Event activity:</strong> events you host, RSVP to, or check in at, plus the
             ratings and content you post.
+          </li>
+          <li>
+            <strong>Discovery preferences:</strong> the description you choose for yourself
+            (such as Student or Teacher) and your event interests. You can skip these questions
+            or change your answers in Settings. Answers stay in your current tab and clear
+            when you sign out.
           </li>
           <li>
             <strong>Event listings:</strong> the details Hosts provide, such as event titles,
@@ -56,7 +62,9 @@ const SECTIONS: LegalSection[] = [
           We do not collect your precise device location unless you choose to allow it, and we do
           not ask for sensitive personal information such as your government ID numbers, health
           records, or religious or political beliefs. Please do not include such information in
-          your profile or event listings.
+          your profile or event listings. The identity verification form currently previews details
+          and images on your device without uploading them; only
+          a per-role demo status is saved in this tab, never your identity details or images.
         </p>
       </>
     ),
@@ -70,6 +78,7 @@ const SECTIONS: LegalSection[] = [
         <ul>
           <li>create and manage your account and let you sign in;</li>
           <li>show, host, and manage events, RSVPs, and QR check-ins;</li>
+          <li>suggest events using your chosen interests and description, without using KYC details;</li>
           <li>send you notifications you have turned on, such as event reminders;</li>
           <li>respond to your questions, reports, and requests;</li>
           <li>keep the Service safe, prevent fraud and abuse, and enforce our Terms; and</li>

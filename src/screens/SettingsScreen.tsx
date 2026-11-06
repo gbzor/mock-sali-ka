@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { ArrowLeft, ChevronRight, LogOut } from "lucide-react";
-import { initialsOf, type Session } from "../useAuth";
+import { ArrowLeft, ChevronRight, LogOut, CalendarPlus, Ticket } from "lucide-react";
+import { initialsOf, type Role, type Session } from "../useAuth";
 import { useToast } from "../components/Toast";
 import type { ScreenName } from "../types";
+import { DEMO_KYC_LABELS, getDemoKycStatus } from "../kyc";
 
 type ToggleKey = "push" | "email";
 
@@ -12,14 +13,17 @@ export function SettingsScreen({
   session,
   dark,
   onToggleDark,
+  onSwitchRole,
 }: {
   onNavigate: (s: ScreenName) => void;
   onLogout: () => void;
   session: Session;
   dark: boolean;
   onToggleDark: () => void;
+  onSwitchRole: (role: Role) => void;
 }) {
-  const displayEmail = session.email || "guest@salika.app";
+  const isHost = session.role === "host";
+  const displayEmail = session.email;
   const notify = useToast();
   const demo = () => notify("This is a demo — changes aren't saved");
   const [toggles, setToggles] = useState<Record<ToggleKey, boolean>>({
@@ -42,10 +46,41 @@ export function SettingsScreen({
           <strong>{session.name}</strong>
           <span className="muted">{displayEmail}</span>
         </span>
-        <span className="settings-summary__badge">{session.guest ? "GUEST" : "PRO"}</span>
+        <span className="settings-summary__badge">PRO</span>
       </div>
 
+      {/* Switch between the attendee and host (organizer) UI. */}
+      <SettingsGroup title={isHost ? "Joining" : "Hosting"}>
+        <div className="role-switch">
+          <span className="role-switch__icon" aria-hidden="true">
+            {isHost ? <Ticket size={22} strokeWidth={2.2} /> : <CalendarPlus size={22} strokeWidth={2.2} />}
+          </span>
+          <span className="role-switch__text">
+            <strong>{isHost ? "Want to join other events?" : "Do you want to host an event?"}</strong>
+            <span className="muted">
+              {isHost
+                ? "Switch to the attendee view to browse, like, and join events near you."
+                : "Switch to the host view to post events, check people in, and see your ratings."}
+            </span>
+          </span>
+          <button
+            type="button"
+            className="btn-primary role-switch__btn"
+            onClick={() => onSwitchRole(isHost ? "attendee" : "host")}
+          >
+            {isHost ? "Sali na!" : "Sali ka as a host!"}
+          </button>
+        </div>
+      </SettingsGroup>
+
       <SettingsGroup title="Account">
+        {!isHost && <Row label="Interests & recommendations" chevron onClick={() => onNavigate("discovery")} />}
+        <Row
+          label="Identity verification"
+          hint={DEMO_KYC_LABELS[getDemoKycStatus(session.demoKyc, isHost ? "host" : "attendee")]}
+          chevron
+          onClick={() => onNavigate("verification")}
+        />
         <Row label="Edit Profile" hint="Personal details, bio, and links" chevron onClick={demo} />
         <Row label="Change Password" hint="Last updated 3 months ago" chevron onClick={demo} />
       </SettingsGroup>
