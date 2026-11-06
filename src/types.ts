@@ -7,9 +7,10 @@ export type Category =
   | "Concert"
   | "Pop-Up";
 
+export type Occupation = "student" | "teacher" | "professional" | "business_owner" | "self_employed" | "other" | "prefer_not_to_say";
+
 export type ScreenName =
   | "home"
-  | "hosted"
   | "host-profile"
   | "calendar"
   | "map"
@@ -19,14 +20,20 @@ export type ScreenName =
   | "qr-scanner"
   | "attendance"
   | "settings"
+  | "verification"
+  | "discovery"
   | "terms"
   | "privacy"
   | "bylaws"
   | "organized-events"
-  | "followers";
+  | "followers"
+  | "liked-events"
+  | "host-dashboard"
+  | "staff"
+  | "staff-scanner";
 
 /** Tabs on the Profile screen. */
-export type ProfileTab = "organizer" | "attendee" | "liked";
+export type ProfileTab = "organizer" | "attendee" | "past";
 
 export interface EventItem {
   id: string;
@@ -39,4 +46,10 @@ export interface EventItem {
   going: number;
   hosting?: boolean;
   attending?: boolean;
+  /** The event already happened (past events can be rated, not joined). */
+  ended?: boolean;
+  /** Organizer's display name, when it isn't the current user. */
+  hostName?: string;
+  /** Optional organizer-supplied audience tags for discovery, never attendance restrictions. */
+  audiences?: Occupation[];
 }
